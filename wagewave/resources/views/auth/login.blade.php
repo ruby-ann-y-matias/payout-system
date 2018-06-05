@@ -5,7 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">
+                    {{-- {{ __('Login') }} --}}
+                    <img id="loginImg" src="{{ asset('img/wagewave.jpg') }}">
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -29,7 +32,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required data-toggle="password">
 
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback">
@@ -51,19 +54,49 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button id="loginBtn" type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
+                            </div>
+                        </div>
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                        <hr>
+
+                        <div class="form-group row">
+                            <div class="col-md-4 offset-md-2">
+                                <a id="forgotPwd" class="btn btn-link" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
                             </div>
+
+                            <div class="col-md-4">
+                                <a id="noAccount" class="btn btn-link" href="{{ route('register') }}">{{ __('No account yet?') }}
+                                    <span> Register</span>
+                                </a>
+                            </div>
                         </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('indiv_js')
+
+<script type="text/javascript">
+    
+    $('[data-toggle="password"]').password({
+      append: 'right',
+      iconPrefix: 'fa',  
+      iconShow: 'fa-eye',
+      iconHide: 'fa-eye-slash',
+      tooltip: 'Show/Hide password',
+      debug: true
+    });
+
+</script>
+
 @endsection

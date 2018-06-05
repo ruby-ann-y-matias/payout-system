@@ -5,7 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">
+                    <img id="registerImg" src="{{ asset('img/wagewave.jpg') }}">
+                </div>
                 
                 @if (session()->has('message'))
                     <div class="alert alert-success">
@@ -77,15 +79,25 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" oninput="compare()" required>
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button id="registerBtn" type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group row">
+                            <div class="col-md-4 offset-md-6">
+                                <a id="withAccount" class="btn btn-link" href="{{ route('login') }}">{{ __('Already registered?') }}
+                                    <span> Login</span>
+                                </a>
                             </div>
                         </div>
                     </form>

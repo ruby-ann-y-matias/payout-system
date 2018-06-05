@@ -19,9 +19,12 @@ class CreateEmployeesTable extends Migration
             $table->text('address')->nullable();
             $table->string('mobile')->nullable();
             $table->date('birth_date')->nullable();
+            $table->string('email')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('image')->nullable();
             $table->string('TIN')->nullable();
             $table->string('SSS')->nullable();
-            $table->string('Pag-ibig')->nullable();
+            $table->string('Pagibig')->nullable();
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ class CreateContributionsTable extends Migration
             $table->integer('employee_id')->unsigned();
             $table->decimal('tax_withheld')->nullable();
             $table->decimal('sss_contribution')->nullable();
-            $table->decimal('pag-ibig_contribution')->nullable();
+            $table->decimal('pagibig_contribution')->nullable();
             $table->decimal('insurance_premium')->nullable();
             $table->date('date');
             $table->timestamps();

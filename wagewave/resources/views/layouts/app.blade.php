@@ -13,6 +13,9 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    {{-- Show/Hide Password Icons --}}
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
@@ -20,7 +23,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="log-and-reg">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
@@ -71,5 +74,13 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Import jQuery -->      
+    <script type="text/javascript" src="{{ asset('lib/jquery-3.2.1.min.js') }}"></script>
+
+    @yield('indiv_js')
+
+    <script src="{{ asset('lib/bootstrap-password-toggler.min.js') }}"></script>
+
 </body>
 </html>
