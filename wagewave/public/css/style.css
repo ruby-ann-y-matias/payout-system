@@ -4,6 +4,111 @@
 	box-sizing: border-box;
 }
 
-nav {
-	height: 100px;
+#slideOut > li > a > i,
+#slideOut > li > a {
+	color: rgba(255, 255, 255, 0.9);
+}
+
+#layoutImg {
+	margin-top: 15px;
+}
+
+#brand {
+	height: 180px;
+}
+
+#navImg {
+	margin-top: 17px;
+	margin-left: 10px;
+}
+
+#rootCrumb {
+	margin-left: 10px;
+}
+
+@media only screen and (min-width: 767px) {
+	.container {
+		position: absolute;
+		right: 10px;
+	}
+}
+
+@media only screen and (min-width: 767px) {
+	.sidenav {
+	    transform: translateX(0%) !important;
+	}
+
+	header {
+		padding-left: 240px;
+	}
+
+	#rootCrumb {
+		margin-left: 100px;
+	}
+
+	#navImg,
+	.sidenav-trigger {
+		display: none;
+	}
+
+	#closeBtn {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	#navImg {
+		width: 10%;
+	}
+}
+
+/* iPad Mini, iPad Air, iPad Pro PORTRAIT */
+@media only screen and (min-width: 767px) and (max-width: 1022px) {
+	.container {
+		width: 59vw;
+	}
+}
+
+/* iPad Mini, iPad Air LANDSCAPE */
+@media only screen and (min-width: 1023px) and (max-width: 1279px) {
+	.container {
+		width: 68vw;
+	}
+}
+
+/* iPad Pro LANDSCAPE AND most Laptops */
+@media only screen and (min-width: 1280px) and (max-width: 1368px) {
+	.container {
+		width: 75vw;
+	}
+}
+
+@media only screen and (min-width: 1369px) {
+	.container {
+		width: 77vw;
+	}
+}
+
+/* DASHBOARD */
+
+.dash-card {
+	padding: 10px;
+}
+
+.mini-con {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.mini-card {
+	padding: 35px;
+}
+
+.mini-card:hover {
+	border: 2px solid indigo;
+}
+
+#dashTitle {
+	margin-bottom: 10px;
+	font-family: 'Kavoon', cursive;
 }

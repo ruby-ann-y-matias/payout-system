@@ -20,3 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');
+
+Route::get('/employees', 'EmployeeController@listAll');
+
+Route::get('/jobs', 'PayoutController@listJobs');
