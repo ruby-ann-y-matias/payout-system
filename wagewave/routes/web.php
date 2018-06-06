@@ -24,3 +24,7 @@ Route::get('/verify-user/{code}', 'Auth\RegisterController@activateUser')->name(
 Route::get('/employees', 'EmployeeController@listAll');
 
 Route::get('/jobs', 'PayoutController@listJobs');
+
+Route::get('/employee/{id}', 'EmployeeController@viewIndividual');
+
+Route::post('/employee/{id}/update', 'EmployeeController@updateInfo');

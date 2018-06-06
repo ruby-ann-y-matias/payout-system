@@ -3,10 +3,7 @@
 @section('breadcrumb')
     <nav>
         <div class="nav-wrapper indigo darken-2">
-            <a id="rootCrumb" class="breadcrumb" href="{{ url('/home') }}">Admin</a>
-            <a class="breadcrumb" href="{{ url('/home') }}">Index</a>
-
-            <div class="right" id="clock"></div>
+            <a id="rootCrumb" class="breadcrumb" href="{{ url('/home') }}">Index</a>
         </div>
     </nav>
 @endsection

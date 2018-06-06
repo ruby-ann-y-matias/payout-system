@@ -112,3 +112,44 @@
 	margin-bottom: 10px;
 	font-family: 'Kavoon', cursive;
 }
+
+/* EMPLOYEES */
+
+#searchInput {
+	background-image: url('../img/search.jpg');
+	background-position: 10px 10px;
+	background-repeat: no-repeat;
+	background-size: 3%;
+	font-size: 1em;
+	border: 1px solid #ddd;
+	padding-left: 50px;
+	width: 80%;
+	margin-top: 12px;
+	margin-bottom: 12px;
+	background-color: white;
+	border-radius: 10px;
+}
+
+@media only screen and (max-width: 1022px) {
+	#searchInput {
+		background-size: 5%;
+	}
+}
+
+#employeeList {
+	list-style-type: none;
+}
+
+#employeeList li a {
+	border: 1px solid #ddd;
+	margin-top: -1px;
+	padding: 12px;
+	text-decoration: none;
+	font-size: 1em;
+	display: block;
+	background-color: #f2f2f2;
+}
+
+#employeeList li a:hover {
+	background-color: #E5BB4B; /*MUSTARD*/
+}
