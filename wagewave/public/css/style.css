@@ -113,7 +113,7 @@
 	font-family: 'Kavoon', cursive;
 }
 
-/* EMPLOYEES */
+/* EMPLOYEES & JOBS */
 
 #searchInput {
 	background-image: url('../img/search.jpg');
@@ -136,10 +136,12 @@
 	}
 }
 
+#jobList,
 #employeeList {
 	list-style-type: none;
 }
 
+#jobList li a,
 #employeeList li a {
 	border: 1px solid #ddd;
 	margin-top: -1px;
@@ -150,6 +152,39 @@
 	background-color: #f2f2f2;
 }
 
+#jobList li a:hover,
 #employeeList li a:hover {
 	background-color: #E5BB4B; /*MUSTARD*/
+}
+
+.add-form {
+	background-color: white;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+.add-form .input-field {
+	background-color: white;
+}
+
+.add-form .input-field > label {
+	color: teal;
+}
+
+.add-submit {
+	margin-right: 30px;
+}
+
+.empty-msg {
+	font-family: 'Kavoon', cursive;
+	text-align: center;
+	padding-top: 50px;
+}
+
+.empty-container {
+	text-align: center;
+}
+
+.overflow {
+	text-overflow: ellipsis;
 }

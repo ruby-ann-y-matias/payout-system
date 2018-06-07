@@ -3,8 +3,7 @@
 @section('breadcrumb')
     <nav>
         <div class="nav-wrapper indigo darken-2">
-            <a id="rootCrumb" class="breadcrumb" href="{{ url('/home') }}">Admin</a>
-            <a class="breadcrumb" href="{{ url('/home') }}">Index</a>
+            <a id="rootCrumb" class="breadcrumb" href="{{ url('/home') }}">Index</a>
             <a class="breadcrumb" href="{{ url('/employees') }}">Employees</a>
         </div>
     </nav>
@@ -13,6 +12,8 @@
 @section('content')
 
 	<div class="container">
+
+		@if (!$employees->isEmpty())
 		<input type="text" id="searchInput" onkeyup="pseudoFuzzy()" placeholder="Search for employee's name" class="form-control">
 
 		<ul id="employeeList">
@@ -22,6 +23,22 @@
 		</ul>
 
 		{{-- {{ $employees->links() }} --}}
+
+		<div class="fixed-action-btn">
+			<a class="btn-floating btn-large teal modal-trigger" href="{{ url('employees/add-new') }}">
+				<i class="material-icons">add</i>
+			</a>
+		</div>
+
+		@else
+
+		<div class="empty-container">
+			<h5 class="empty-msg center-align indigo-text">No employees found.</h5>
+			<a class="btn-large teal modal-trigger" href="{{ url('/jobs/add-new') }}">Add Someone Now</a>
+		</div>
+
+		@endif
+
 	</div>
 
 @endsection

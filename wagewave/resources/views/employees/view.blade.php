@@ -13,26 +13,26 @@
 @section('content')
 	<div class="container">
 		<div class="row">
-			<div class="col s12 m4">
+			<div class="col s12 m6 l4">
 				<div class="card">
 					<div class="card-image">
 						<img src={{ asset("$employee->image") }} class="responsive-img">
 						<span class="card-title">{{ $employee->id }}</span>
-						<button id="editBtn" class="btn-floating halfway-fab waves-effect waves-light red accent-4"><i class="material-icons">edit</i></button>
+						<button id="editBtn" class="btn-floating halfway-fab waves-effect waves-light red darken-4"><i class="material-icons">edit</i></button>
 					</div>
 					<div id="currentInfo" class="card-content">
 						<h5>{{ $employee->name }}</h5>
-						<p><b>Contact no.:</b> {{ $employee->mobile }}</p>
+						<p><strong>Contact no.:</strong> {{ $employee->mobile }}</p>
 						<hr>
-						<p><b>Address:</b> {{ $employee->address }}</p>
+						<p><strong>Address:</strong> {{ $employee->address }}</p>
 						<hr>
-						<p><b>Birth date:</b> {{ $employee->birth_date }}</p>
+						<p><strong>Birth date:</strong> {{ $employee->birth_date }}</p>
 						<hr>
-						<p><b>TIN:</b> {{ $employee->TIN }}</p>
+						<p><strong>TIN:</strong> {{ $employee->TIN }}</p>
 						<hr>
-						<p><b>SSS:</b> {{ $employee->SSS }}</p>
+						<p><strong>SSS:</strong> {{ $employee->SSS }}</p>
 						<hr>
-						<p><b>Pag-ibig MID:</b> {{ $employee->Pagibig }}</p>
+						<p><strong>Pag-ibig MID:</strong> {{ $employee->Pagibig }}</p>
 					</div>
 					<div id="editInfo" class="card-content" hidden>
 						<form id="editForm" action={{ url("/employee/$employee->id/update") }} method="POST">
@@ -51,24 +51,43 @@
 									<label class="active" for="address">Address:</label>
 								</div>
 								<div class="input-field col s12">
-									<input type="date" id="birthDate" name="birth_date" value="{{ $employee->birth_date }}" class="validate">
+									<input type="date" id="birthDate" name="birth_date" value="{{ $employee->birth_date }}" class="validate" min="2000-06-12" max="1958-06-12">
 									<label class="active" for="birthDate">Birth Date:</label>
 								</div>
 								<div class="input-field col s12">
-									<input type="text" id="TIN" name="TIN" value="{{ $employee->TIN }}" class="validate" oninput="formatTIN()" pattern="[^A-Za-z][0-9]{12,}" maxlength="15">
+									<input type="text" id="TIN" name="TIN" value="{{ $employee->TIN }}" class="validate" oninput="formatTIN()" pattern="[0-9-]{12,}" maxlength="15">
 									<label class="active" for="TIN">TIN:</label>
 								</div>
 								<div class="input-field col s12">
-									<input type="text" id="SSS" name="SSS" value="{{ $employee->SSS }}" class="validate" oninput="formatSSS()" pattern="[0-9]{10,}" maxlength="12">
+									<input type="text" id="SSS" name="SSS" value="{{ $employee->SSS }}" class="validate" oninput="formatSSS()" pattern="[0-9-]{10,}" maxlength="12">
 									<label class="active" for="SSS">SSS:</label>
 								</div>
 								<div class="input-field col s12">
-									<input type="text" id="Pagibig" name="Pagibig" value="{{ $employee->Pagibig }}" class="validate">
+									<input type="text" id="Pagibig" name="Pagibig" value="{{ $employee->Pagibig }}" class="validate" oninput="formatPagibig()" pattern="[0-9-]{12,}" maxlength="14">
 									<label class="active" for="Pagibig">Pag-ibig MID:</label>
 								</div>
 								<button type="submit" class="waves-effect btn green accent-5 right">Save</button>
 							</div>
 						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="col s12 m6 l4">
+				<div class="card">
+					<div class="card-content">
+						<h5>{{ $today }}</h5>
+					</div>
+					<div class="card-action">
+						<div class="clock-in">
+						<button class="btn teal" id="clockIn" value="{{ $employee->id }}">Clock In</button>
+						</div>
+						<div class="clock-out" hidden>
+						<button class="btn teal" id="clockOut" value="{{ $employee->id }}">Clock Out</button>
+						</div>
+					</div>
+					<div id="todaysLog" class="card-content">
+						
 					</div>
 				</div>
 			</div>
@@ -87,11 +106,19 @@
 			});
 		});
 
+		$('#clockIn').on('click', function() {
+			var empID = $(this).val();
+			var csrf = $('[name="csrf-token"]').attr('content');
+			// alert(empID);
+			// alert(csrf);
+
+		});
+
 		function formatTIN() {
-			var input = document.getElementById("TIN");
+			var inputTIN = document.getElementById("TIN");
 			var newTIN = document.getElementById("TIN").value;
 			// console.log(newTIN);
-			newTIN = newTIN.replace(/[\W\s\._\-]+/g, '');
+			newTIN = newTIN.replace(/[\W\D\s\._\-]+/g, '');
 
 			var split = 3;
 			var chunk = [];
@@ -102,28 +129,57 @@
 
 			var formattedTIN = chunk.join("-");
 			// console.log(formattedTIN);
-			input.value = formattedTIN;
+			inputTIN.value = formattedTIN;
 		}
 
 		function formatSSS() {
-			var input = document.getElementById("SSS");
+			var inputSSS = document.getElementById("SSS");
 			var newSSS = document.getElementById("SSS").value;
 			// console.log(newSSS);
-			newSSS = newSSS.replace(/[\W\s\._\-]+/g, '');
+			newSSS = newSSS.replace(/[\W\D\s\._\-]+/g, '');
 
-			var split = 3;
+			var split;
 			var chunk = [];
 
-			for (var i = 0, len = newSSS.length; i < len; i += split) {
+			for (var i = 0, len = newSSS.length; i < len; i++) {
+				switch (i) {
+					case 0:
+						split = 2;
+						break;
+					case 2:
+						split = 7;
+						break;
+					case 9:
+						split = 1;
+						break;
+					default:
+						continue;
+				}
 				chunk.push(newSSS.substr(i, split));
 			}
 
 			var formattedSSS = chunk.join("-");
 			// console.log(formattedSSS);
-			input.value = formattedSSS;
+			inputSSS.value = formattedSSS;
 		}
 
+		function formatPagibig() {
+			var inputPagibig = document.getElementById("Pagibig");
+			var newPagibig = document.getElementById("Pagibig").value;
+			// console.log(newPagibig);
+			newPagibig = newPagibig.replace(/[\W\D\s\._\-]+/g, '');
 
+			var split = 4;
+			var chunk = [];
+
+			for (var i = 0, len = newPagibig.length; i < len; i += split) {
+				chunk.push(newPagibig.substr(i, split));
+			}
+
+			var formattedPagibig = chunk.join("-");
+			// console.log(formattedPagibig);
+			inputPagibig.value = formattedPagibig;
+		}
 
 	</script>
 @endsection

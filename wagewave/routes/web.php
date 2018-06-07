@@ -28,3 +28,17 @@ Route::get('/jobs', 'PayoutController@listJobs');
 Route::get('/employee/{id}', 'EmployeeController@viewIndividual');
 
 Route::post('/employee/{id}/update', 'EmployeeController@updateInfo');
+
+Route::get('/employees/add-new', 'EmployeeController@addNew');
+
+Route::post('/employees/save-new', 'EmployeeController@saveNew');
+
+Route::get('/job/{id}', 'PayoutController@viewJob');
+
+Route::post('/job/{id}/update', 'PayoutController@updateJob');
+
+Route::get('/jobs/add-new', 'PayoutController@addJob');
+
+Route::post('/jobs/save-new', 'PayoutController@saveJob');
+
+Route::get('/timesheet', 'EmployeeController@checkLogs');

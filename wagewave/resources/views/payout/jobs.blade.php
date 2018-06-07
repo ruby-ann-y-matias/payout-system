@@ -12,15 +12,31 @@
 @section('content')
 
 	<div class="container">
-		<input type="text" id="searchInput" onkeyup="pseudoFuzzy()" placeholder="Search for employee's name" class="form-control">
+		@if (!$jobs->isEmpty())
+		<input type="text" id="searchInput" onkeyup="pseudoFuzzy()" placeholder="Search for job title" class="form-control">
 
-		<ul id="employeeList">
+		<ul id="jobList">
 			@foreach($jobs as $job)
-			<li><a href="#" class="black-text">{{ $job->job }}</a></li>
+			<li><a href={{ url("job/$job->id") }} class="black-text">{{ $job->job }}</a></li>
 			@endforeach
 		</ul>
 
-		{{-- {{ $employees->links() }} --}}
+		{{-- {{ $jobs->links() }} --}}
+
+		<div class="fixed-action-btn">
+			<a class="btn-floating btn-large teal modal-trigger" href="{{ url('/jobs/add-new') }}">
+				<i class="material-icons">add</i>
+			</a>
+		</div>
+
+		@else
+
+		<div class="empty-container">
+			<h5 class="empty-msg center-align indigo-text">Job list feels quite lonely.</h5>
+			<a class="btn-large teal modal-trigger" href="{{ url('/jobs/add-new') }}">Add New Job Now</a>
+		</div>
+
+		@endif
 	</div>
 
 @endsection
@@ -33,7 +49,7 @@
 			input = document.getElementById("searchInput");
 			filter = input.value.toUpperCase();
 			// alert(filter);
-			ul = document.getElementById("employeeList");
+			ul = document.getElementById("jobList");
 			li = ul.getElementsByTagName("li");
 
 			// console.log(JSON.parse(JSON.stringify(li)));
