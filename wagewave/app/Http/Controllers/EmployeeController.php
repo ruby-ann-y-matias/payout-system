@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use App\Timesheet;
+use App\Payout;
+use App\Job;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -17,10 +19,19 @@ class EmployeeController extends Controller
 
     function viewIndividual($id) {
     	$employee = Employee::find($id);
+        $jobs = Job::all();
     	// dd($employee);
         date_default_timezone_set('Asia/Manila');
         $today = date('F j, Y');
-    	return view('employees.view', compact('employee', 'today'));
+
+        $date = date('Y-n-j');
+
+        $logs = Timesheet::where([
+                        ['employee_id', '=', $id],
+                        ['date', '=', $date]
+                    ])->get();
+        // dd($logs);
+    	return view('employees.view', compact('employee', 'today', 'logs', 'jobs'));
     }
 
     function updateInfo(Request $request, $id) {
@@ -72,5 +83,41 @@ class EmployeeController extends Controller
         $logs = Timesheet::all();
 
         return view('employees.logs', compact('logs'));
+    }
+
+    function clockIn(Request $request) {
+        $employee = Employee::find($request->employee_id);
+        $job = Job::find($request->job_id);
+        // dd($employee);
+        date_default_timezone_set('Asia/Manila');
+        $today = date('Y-n-j');
+        $time = date('H:i:s');
+
+        $timesheet = new Timesheet();
+        $timesheet->employee_id = $request->employee_id;
+        $timesheet->job_id = $request->job_id;
+        $timesheet->date = $today;
+        $timesheet->clock_in = $time;
+        $timesheet->save();
+
+        return view('employees.timesheet', compact('timesheet', 'job'));
+    }
+
+    function clockOut(Request $request) {
+        date_default_timezone_set('Asia/Manila');
+        $today = date('Y-n-j');
+        $time = date('H:i:s');
+
+        $logs = Timesheet::where([
+                        ['date', '=', $today],
+                        ['employee_id', '=', $request->employee_id]
+                    ])->get();
+        // dd($logs);
+        foreach ($logs as $timesheet) {
+            $timesheet->clock_out = $time;
+            $timesheet->save();
+        }
+
+        return view('employees.timesheet', compact('timesheet'));
     }
 }

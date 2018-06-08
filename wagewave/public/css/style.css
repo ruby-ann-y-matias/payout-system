@@ -188,3 +188,9 @@
 .overflow {
 	text-overflow: ellipsis;
 }
+
+.todays-log {
+	margin-top: 20px;
+}
+
+/* TIMESHEET */

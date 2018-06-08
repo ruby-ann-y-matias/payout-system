@@ -42,3 +42,9 @@ Route::get('/jobs/add-new', 'PayoutController@addJob');
 Route::post('/jobs/save-new', 'PayoutController@saveJob');
 
 Route::get('/timesheet', 'EmployeeController@checkLogs');
+
+Route::post('/timesheet/clock-in/{id}', 'EmployeeController@clockIn');
+
+Route::post('/timesheet/clock-out/{id}', 'EmployeeController@clockOut');
+
+

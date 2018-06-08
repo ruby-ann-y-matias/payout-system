@@ -16,6 +16,7 @@ class CreateTimesheetsTable extends Migration
         Schema::create('timesheets', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
+            $table->integer('job_id')->unsigned();
             $table->date('date');
             $table->time('clock_in');
             $table->time('clock_out')->nullable();
@@ -24,6 +25,11 @@ class CreateTimesheetsTable extends Migration
             $table->foreign('employee_id')
                     ->references('id')
                     ->on('employees')
+                    ->onDelete('cascade');
+
+            $table->foreign('job_id')
+                    ->references('id')
+                    ->on('jobs')
                     ->onDelete('cascade');
         });
     }

@@ -79,15 +79,41 @@
 						<h5>{{ $today }}</h5>
 					</div>
 					<div class="card-action">
+						@if (!$logs->isEmpty())
+							@foreach($logs as $timesheet)
+								@if($timesheet->clock_out == null)
+								<div class="clock-out">
+									<button class="btn teal" id="clockOut" value="{{ $employee->id }}">Clock Out</button>
+								</div>
+								@endif
+							<div class="todays-log">
+								<h6>{{ $timesheet->job->job }}</h6>
+								<p><strong>Time In: </strong>{{ $timesheet->clock_in }}</p>
+								<p><strong>Time Out: </strong>{{ $timesheet->clock_out }}</p>
+							</div>
+							@endforeach
+						@else
 						<div class="clock-in">
-						<button class="btn teal" id="clockIn" value="{{ $employee->id }}">Clock In</button>
+							<div class="row">
+							<div class="input-field col s12">
+								<select id="todaysJob" name="job_id">
+									<option value="" disabled selected>Select the job</option>
+									@foreach($jobs as $job)
+									<option value="{{ $job->id }}">{{ $job->job }}</option>
+									@endforeach
+								</select>
+								<label>Today's Job</label>
+							</div>
+							<button class="btn teal" id="clockIn" value="{{ $employee->id }}">Clock In</button>
+							</div>
 						</div>
 						<div class="clock-out" hidden>
-						<button class="btn teal" id="clockOut" value="{{ $employee->id }}">Clock Out</button>
+									<button class="btn teal" id="clockOut" value="{{ $employee->id }}">Clock Out</button>
+								</div>
+						<div class="todays-log" hidden>
+							
 						</div>
-					</div>
-					<div id="todaysLog" class="card-content">
-						
+						@endif
 					</div>
 				</div>
 			</div>
@@ -100,6 +126,8 @@
 	<script type="text/javascript">
 		
 		$(document).ready(function() {
+			$('select').formSelect();
+
 			$('#editBtn').click(function() {
 				$('#currentInfo').toggle();
 				$('#editInfo').toggle();
@@ -108,10 +136,41 @@
 
 		$('#clockIn').on('click', function() {
 			var empID = $(this).val();
+			var jobID = $('#todaysJob').val();
+			var csrf = $('[name="csrf-token"]').attr('content');
+			// alert(empID);
+			// alert(csrf);
+			// alert(jobID);
+
+			$.post('/timesheet/clock-in/' + empID,
+				{
+					employee_id: empID,
+					job_id: jobID,
+					_token: csrf
+				},
+				function(data, status) {
+					$('.clock-in').toggle();
+					$('.clock-out').toggle();
+					$('.todays-log').html(data);
+					$('.todays-log').toggle();
+				});
+		});
+
+		$('#clockOut').on('click', function() {
+			var empID = $(this).val();
 			var csrf = $('[name="csrf-token"]').attr('content');
 			// alert(empID);
 			// alert(csrf);
 
+			$.post('/timesheet/clock-out/' + empID,
+				{
+					employee_id: empID,
+					_token: csrf
+				},
+				function(data, status) {
+					$('.clock-out').toggle();
+					$('.todays-log').html(data);
+				});
 		});
 
 		function formatTIN() {
