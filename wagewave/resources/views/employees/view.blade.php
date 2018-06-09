@@ -33,6 +33,22 @@
 						<p><strong>SSS:</strong> {{ $employee->SSS }}</p>
 						<hr>
 						<p><strong>Pag-ibig MID:</strong> {{ $employee->Pagibig }}</p>
+						<button type="button" class="btn waves-effect red darken-4 modal-trigger delete-btn" href="#deleteEmpModal"><i class="material-icons">delete_forever</i> Delete Account</button>
+						<div class="modal" id="deleteEmpModal">
+							<div id="deleteModalContent" class="modal-content">
+								<form action="/employee/delete/{{ $employee->id }}" method="POST">
+									{{ csrf_field() }}
+									{{ method_field('delete') }}
+									<p>Are your sure you want to delete<br>{{ $employee->name }}'s account?</p>
+									<input hidden name="employee_id" value="{{ $employee->id }}">
+									<button type="submit" class="btn waves-effect red darken-4">Yes</button>
+									<button type="button" class="btn waves-effect teal lighten-3 modal-close">No</button>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+							</div>
+						</div>
 					</div>
 					<div id="editInfo" class="card-content" hidden>
 						<form id="editForm" action={{ url("/employee/$employee->id/update") }} method="POST">
@@ -79,42 +95,123 @@
 						<h5>{{ $today }}</h5>
 					</div>
 					<div class="card-action">
-						@if (!$logs->isEmpty())
-							@foreach($logs as $timesheet)
-								@if($timesheet->clock_out == null)
-								<div class="clock-out">
-									<button class="btn teal" id="clockOut" value="{{ $employee->id }}">Clock Out</button>
-								</div>
-								@endif
+
+					{{-- WITH TIMESHEET RECORD FOR TODAY --}}
+					@if (!$logs->isEmpty())
+						@foreach($logs as $timesheet)
+
+							{{-- WITH RECORD BUT NO TIME OUT YET --}}
+							@if($timesheet->clock_out == null)
+							
+							<div class="clock-out">
+								<button class="btn teal" id="clockOut" value="{{ $employee->id }}"><i class="material-icons">timer</i> Clock Out</button>
+							</div>
 							<div class="todays-log">
-								<h6>{{ $timesheet->job->job }}</h6>
+								<h6 class="job-title">{{ $timesheet->job->job }}</h6>
+								<p><small class="indigo-text">Hourly Rate: USD {{ $timesheet->job->hourly_rate }}</small></p>
 								<p><strong>Time In: </strong>{{ $timesheet->clock_in }}</p>
 								<p><strong>Time Out: </strong>{{ $timesheet->clock_out }}</p>
 							</div>
-							@endforeach
-						@else
+
+							<div class="row">
+								<div class="col s12">
+									<button type="button" class="btn waves-effect red darken-4 modal-trigger delete-btn" href="#deleteLogModal"><i class="material-icons">delete_forever</i> Delete Log</button>
+									<div class="modal" id="deleteLogModal">
+										<div id="deleteModalContent" class="modal-content">
+											<form action="/timesheet/delete/{{ $timesheet->id }}" method="POST">
+												{{ csrf_field() }}
+												{{ method_field('delete') }}
+												<p>Are your sure you want to delete this log?</p>
+												<p><small><span class="orange-text">Warning:</span> Related payout, if there's any, will be deleted, too.</small></p>
+												<input hidden name="timesheet_id" value="{{ $timesheet->id }}">
+												<button type="submit" class="btn waves-effect red darken-4">Yes</button>
+												<button type="button" class="btn waves-effect teal lighten-3 modal-close">No</button>
+											</form>
+										</div>
+										<div class="modal-footer">
+											<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							@else
+
+							{{-- COMPLETE RECORD --}}
+							<div class="todays-log">
+
+								<h6 class="job-title">{{ $timesheet->job->job }}</h6>
+								<p><small class="indigo-text">Hourly Rate: USD {{ $timesheet->job->hourly_rate }}</small></p>
+								<p><strong>Time In: </strong>{{ $timesheet->clock_in }}</p>
+								<p><strong>Time Out: </strong>{{ $timesheet->clock_out }}</p>
+
+								<div class="row">
+									<div class="col s12">
+										<button type="button" class="btn waves-effect red darken-4 modal-trigger delete-btn" href="#deleteLogModal"><i class="material-icons">delete_forever</i> Delete Log</button>
+										<div class="modal" id="deleteLogModal">
+											<div id="deleteModalContent" class="modal-content">
+												<form action="/timesheet/delete/{{ $timesheet->id }}" method="POST">
+													{{ csrf_field() }}
+													{{ method_field('delete') }}
+													<p>Are your sure you want to delete this log?</p>
+													<p><small><span class="orange-text">Warning:</span> Related payout, if there's any, will be deleted, too.</small></p>
+													<input hidden name="timesheet_id" value="{{ $timesheet->id }}">
+													<button type="submit" class="btn waves-effect red darken-4">Yes</button>
+													<button type="button" class="btn waves-effect teal lighten-3 modal-close">No</button>
+												</form>
+											</div>
+											<div class="modal-footer">
+												<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								@if (!$payouts->isEmpty())
+
+									@foreach($payouts as $payout)
+
+									<p><strong>Hours Worked: </strong>{{ number_format($payout->hours, 2, '.', ',') }}</p>
+									<p><strong>Wage Earned: USD </strong>{{ number_format($payout->wage, 2, '.', ',') }}</p>
+
+									@endforeach
+
+								@endif
+
+							</div> 
+
+							@endif
+							
+						@endforeach
+
+					@else
+
+					{{-- NO RECORD FOR TODAY --}}
 						<div class="clock-in">
 							<div class="row">
-							<div class="input-field col s12">
-								<select id="todaysJob" name="job_id">
-									<option value="" disabled selected>Select the job</option>
-									@foreach($jobs as $job)
-									<option value="{{ $job->id }}">{{ $job->job }}</option>
-									@endforeach
-								</select>
-								<label>Today's Job</label>
-							</div>
+								<div class="input-field col s12">
+									<select id="todaysJob" name="job_id" required class="validate">
+										<option value="" disabled selected>Select the job</option>
+										@foreach($jobs as $job)
+										<option value="{{ $job->id }}">{{ $job->job }}</option>
+										@endforeach
+									</select>
+									<label>Today's Job</label>
+								</div>
 							<button class="btn teal" id="clockIn" value="{{ $employee->id }}">Clock In</button>
 							</div>
 						</div>
 						<div class="clock-out" hidden>
-									<button class="btn teal" id="clockOut" value="{{ $employee->id }}">Clock Out</button>
-								</div>
+							<button class="btn teal" id="clockOut" value="{{ $employee->id }}"><i class="material-icons">timer</i> Clock Out</button>
+						</div>
 						<div class="todays-log" hidden>
 							
 						</div>
-						@endif
+
+					@endif
+	
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -127,6 +224,7 @@
 		
 		$(document).ready(function() {
 			$('select').formSelect();
+			$('.modal').modal();
 
 			$('#editBtn').click(function() {
 				$('#currentInfo').toggle();

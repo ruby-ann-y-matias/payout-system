@@ -175,6 +175,14 @@
 	margin-right: 30px;
 }
 
+.cancel-new-addition {
+	margin-right: 10px;
+}
+
+.cancel-new-addition a {
+	color: white;
+}
+
 .empty-msg {
 	font-family: 'Kavoon', cursive;
 	text-align: center;
@@ -190,7 +198,43 @@
 }
 
 .todays-log {
-	margin-top: 20px;
+	margin-top: 10px;
+}
+
+#clockIn {
+	margin-left: 12px;
+}
+
+.delete-btn {
+	margin-top: 15px;
+}
+
+.job-title {
+	font-family: 'Kavoon', cursive;
+}
+
+#deleteModalContent {
+	font-family: 'Tillana', cursive;
+	font-size: 1.5em;
+	font-weight: bolder;
+	text-align: center;
 }
 
 /* TIMESHEET */
+
+#logsTable {
+	background-color: white;
+	margin-top: 10px;
+}
+
+table.striped > tbody > tr:nth-child(odd) {
+	background-color: rgba(242, 242, 242, 0.9);
+}
+
+table.highlight > tbody > tr:hover {
+	background-color: #E5BB4B; /*MUSTARD*/
+}
+
+.swal-button {
+	background-color: teal;
+}

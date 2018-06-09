@@ -31,6 +31,22 @@
 						<p><strong>Weekly Rate: $</strong> {{ number_format($job->weekly_rate, 2, '.', ',') }}</p>
 						<hr>
 						<p><strong>Monthly Rate: $</strong> {{ number_format($job->monthly_rate, 2, '.', ',')  }}</p>
+						<button type="button" class="btn waves-effect red darken-4 modal-trigger delete-btn" href="#deleteJobModal"><i class="material-icons">delete_forever</i> Delete Job</button>
+						<div class="modal" id="deleteJobModal">
+							<div id="deleteModalContent" class="modal-content">
+								<form action="/job/delete/{{ $job->id }}" method="POST">
+									{{ csrf_field() }}
+									{{ method_field('delete') }}
+									<p>Are your sure you want to delete<br>{{ $job->job }} from jobs?</p>
+									<input hidden name="job_id" value="{{ $job->id }}">
+									<button type="submit" class="btn waves-effect red darken-4">Yes</button>
+									<button type="button" class="btn waves-effect teal lighten-3 modal-close">No</button>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+							</div>
+						</div>
 					</div>
 					<div id="editInfo" class="card-content" hidden>
 						<form id="editForm" action={{ url("/job/$job->id/update") }} method="POST">
@@ -81,6 +97,8 @@
 	<script type="text/javascript">
 		
 		$(document).ready(function() {
+			$('.modal').modal();
+
 			$('#editBtn').click(function() {
 				$('#currentInfo').toggle();
 				$('#editInfo').toggle();

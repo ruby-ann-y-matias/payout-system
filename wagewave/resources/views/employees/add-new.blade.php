@@ -56,6 +56,7 @@
 					<label class="active" for="Pagibig">Pag-ibig MID:</label>
 				</div>
 				<button type="submit" class="waves-effect btn green accent-5 right add-submit">Save</button>
+				<button type="button" class="waves-effect btn deep-orange darken-3 right cancel-new-addition"><a href="{{ url('/employees') }}">Cancel</a></button>
 			</div>
 		</form>
 

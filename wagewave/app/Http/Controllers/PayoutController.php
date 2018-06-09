@@ -53,4 +53,16 @@ class PayoutController extends Controller
 
         return view('payout.view-job', compact('job'));
     }
+
+    function deleteJob(Request $request) {
+        $job = Job::find($request->job_id);
+        $temp = $job->job;
+        $job->delete();
+
+        $jobs = Job::all();
+
+        alert()->success("$temp has been deleted successfully from the jobs' list.")->autoclose(6000);
+
+        return view('payout.jobs', compact('jobs'));
+    }
 }

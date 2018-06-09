@@ -95,6 +95,11 @@
 
 	@yield('content')
 
+	<script src="{{ asset('js/sweetalert.min.js') }}"></script>
+
+    <!-- Include this after the sweet alert js file -->
+    @include('sweet::alert')
+
 	<!-- Import jQuery -->      
 	<script type="text/javascript" src="{{ asset('lib/jquery-3.3.1.min.js') }}"></script>
 	<!--Import Materialize JS-->
