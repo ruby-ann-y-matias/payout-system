@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class="mini-con col s12 m6 l3">
                             <a href="{{ url('/employees') }}" class="dash-link">
-                                <div class="grey lighten-2 waves-effect mini-card">
+                                <div class="waves-effect mini-card">
                                     <i class="material-icons large indigo-text">people</i>
                                     <p class="indigo-text">Employees</p>
                                 </div>
@@ -34,7 +34,7 @@
 
                         <div class="mini-con col s12 m6 l3">
                             <a href="{{ url('/payout') }}" class="dash-link">
-                                <div class="grey lighten-2 waves-effect mini-card">
+                                <div class="waves-effect mini-card">
                                     <i class="material-icons large indigo-text">payment</i>
                                     <p class="indigo-text">Payout</p>
                                 </div>
@@ -43,7 +43,7 @@
 
                         <div class="mini-con col s12 m6 l3">
                             <a href="{{ url('/timesheet') }}" class="dash-link">
-                                <div class="grey lighten-2 waves-effect mini-card">
+                                <div class="waves-effect mini-card">
                                     <i class="material-icons large indigo-text">timer</i>
                                     <p class="indigo-text">Timesheet</p>
                                 </div>
@@ -52,7 +52,7 @@
 
                         <div class="mini-con col s12 m6 l3">
                             <a href="{{ url('/jobs') }}" class="dash-link">
-                                <div class="grey lighten-2 waves-effect mini-card">
+                                <div class="waves-effect mini-card">
                                     <i class="material-icons large indigo-text">build</i>
                                     <p class="indigo-text">Jobs</p>
                                 </div>

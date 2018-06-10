@@ -17,6 +17,7 @@ class CreatePayoutsTable extends Migration
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
             $table->integer('job_id')->unsigned();
+            $table->integer('timesheet_id')->unsigned();
             $table->integer('hours');
             $table->date('date');
             $table->decimal('wage');
@@ -31,6 +32,11 @@ class CreatePayoutsTable extends Migration
             $table->foreign('job_id')
                     ->references('id')
                     ->on('jobs')
+                    ->onDelete('cascade');
+
+            $table->foreign('timesheet_id')
+                    ->references('id')
+                    ->on('timesheets')
                     ->onDelete('cascade');
 
             $table->foreign('status_id')

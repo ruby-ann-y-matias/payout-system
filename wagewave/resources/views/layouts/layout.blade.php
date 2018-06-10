@@ -48,9 +48,6 @@
 		<li><a class="waves-effect" href="{{ url('/jobs') }}">
 			<i class="material-icons">build</i><b>Jobs</b></a>
 		</li>
-		<li><a class="waves-effect" href="{{ url('/settings') }}">
-			<i class="material-icons">settings</i><b>Settings</b></a>
-		</li>
 		<li id="closeBtn"><a class="sidenav-close" href="#!">
 			<i class="material-icons">close</i><b>Close</b></a>
 		</li>
@@ -95,15 +92,23 @@
 
 	@yield('content')
 
-	<script src="{{ asset('js/sweetalert.min.js') }}"></script>
-
-    <!-- Include this after the sweet alert js file -->
-    @include('sweet::alert')
+	<footer class="page-footer">
+		<div class="footer-copyright">
+			<div class="container">
+				<p class="right">© 2014 Wage Wave by Ruby Ann Y. Matias</p>
+			</div>
+		</div>
+	</footer>
 
 	<!-- Import jQuery -->      
 	<script type="text/javascript" src="{{ asset('lib/jquery-3.3.1.min.js') }}"></script>
 	<!--Import Materialize JS-->
 	<script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+
+	<script src="{{ asset('js/sweetalert.min.js') }}"></script>
+
+    <!-- Include this after the sweet alert js file -->
+    @include('sweet::alert')
 
 	<script type="text/javascript">
 

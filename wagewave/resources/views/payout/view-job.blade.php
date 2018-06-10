@@ -15,9 +15,7 @@
 		<div class="row">
 			<div class="col s12 m4">
 				<div class="card">
-					<div class="card-image">
-						<img src="{{ asset('img/info.jpg') }}"" class="responsive-img">
-						<span class="card-title">{{ $job->id }}</span>
+					<div class="card-image halfway-fab-header">
 						<button id="editBtn" class="btn-floating halfway-fab waves-effect waves-light red darken-4"><i class="material-icons">edit</i></button>
 					</div>
 					<div id="currentInfo" class="card-content">

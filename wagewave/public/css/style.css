@@ -4,6 +4,10 @@
 	box-sizing: border-box;
 }
 
+.card {
+	/*background-color: #f2f2f2;*/
+}
+
 #slideOut > li > a > i,
 #slideOut > li > a {
 	color: rgba(255, 255, 255, 0.9);
@@ -33,7 +37,7 @@
 	}
 }
 
-@media only screen and (min-width: 767px) {
+@media only screen and (min-width: 766px) {
 	.sidenav {
 	    transform: translateX(0%) !important;
 	}
@@ -65,7 +69,7 @@
 /* iPad Mini, iPad Air, iPad Pro PORTRAIT */
 @media only screen and (min-width: 767px) and (max-width: 1022px) {
 	.container {
-		width: 59vw;
+		width: 58vw;
 	}
 }
 
@@ -102,10 +106,12 @@
 
 .mini-card {
 	padding: 35px;
+	border-radius: 50%;
+	background-color: lightgrey;
 }
 
 .mini-card:hover {
-	border: 2px solid indigo;
+	background-color: #E5BB4B; /*MUSTARD*/
 }
 
 #dashTitle {
@@ -220,11 +226,57 @@
 	text-align: center;
 }
 
+.halfway-fab-header {
+	height: 6vh;
+}
+
+.history-owner {
+	font-family: 'Kavoon', cursive;
+}
+
+.info-text {
+	font-family: 'Tillana', cursive;
+	font-size: 1.5em;
+	font-weight: bolder;
+	text-align: center;
+}
+
+@media only screen and (min-width: 601px) and (max-width: 766px) {
+	.employee-card {
+		min-height: 45vh;
+	}
+}
+
+@media only screen and (min-width: 767px) and (max-width: 991px) {
+	.employee-card {
+		min-height: 47vh;
+	}
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1025px) {
+	.employee-card {
+		min-height: 40vh;
+	}
+}
+
+@media only screen and (min-width: 1026px) and (max-width: 1360px) {
+	.employee-card {
+		min-height: 56vh;
+	}
+}
+
+@media only screen and (min-width: 1361px) {
+	.employee-card {
+		min-height: 38vh;
+	}
+}
+
 /* TIMESHEET */
 
 #logsTable {
-	background-color: white;
+	background-color: #fff;
 	margin-top: 10px;
+	margin-bottom: 30px;
 }
 
 table.striped > tbody > tr:nth-child(odd) {
@@ -235,6 +287,59 @@ table.highlight > tbody > tr:hover {
 	background-color: #E5BB4B; /*MUSTARD*/
 }
 
+.datepicker-controls .select-month input {
+	width: 100px !important;
+}
+
+.datepicker-modal {
+	width: 100%;
+}
+
 .swal-button {
 	background-color: teal;
+}
+
+.log-actions {
+	margin-top: 10px;
+}
+
+.fab-container {
+	position: absolute;
+	top: 10px;
+	left: 250px;
+}
+
+.invisible-text {
+	color: transparent;
+}
+
+
+/* SETTINGS */
+#themeSwitchLabel {
+	color: teal;
+	font-weight: bolder;
+	font-size: 2em;
+}
+
+.page-footer {
+	position: fixed;
+	bottom: -13px;
+	right: 0;
+	background-color: transparent;
+}
+
+@media only screen and (max-width: 766px) {
+	.page-footer {
+		width: 100%;
+	}
+
+	.page-footer .footer-copyright .container {
+		width: 100%;
+	}
+}
+
+.page-footer .footer-copyright .container {
+	padding: 10px;
+	color: #45451F; /* PIER */
+	background-color: #C2E6FF; /* POWDER BLUE */
 }

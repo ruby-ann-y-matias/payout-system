@@ -59,26 +59,25 @@
 				</thead>
 				<tbody>
 				@foreach($logs as $timesheet)
-					<tr id="row{{ $timesheet->id }}" class="timesheet-row">
+					<tr>
 						<td><label>
-								<input type="checkbox" name="deleteLogs[]" value="{{ $timesheet->date.$timesheet->clock_in.$timesheet->clock_out }}">
+								<input type="checkbox" name="deleteLogs[]" value="{{ $timesheet->date.$timesheet->clock_in.$timesheet->clock_out  }}">
 								<span class="invisible-text">{{ $timesheet->id }}</span>
 							</label>
 						</td>
-						<td>{{ $timesheet->employee->name }}</td>
-						<td>{{ $timesheet->job->job }}</td>
+						<td>{{ $timesheet->name }}</td>
+						<td>{{ $timesheet->job }}</td>
 						<td >{{ $timesheet->date }}</td>
 						<td>{{ $timesheet->clock_in }}</td>
 						@if ($timesheet->clock_out == null)
 						<div class="clock-out">
-						<td><button class="btn teal modal-trigger clock-out-btn" href="#clockOutModal" value="{{ $timesheet->id }}">Clock Out</button></td>
+						<td><button class="btn teal modal-trigger clock-out-btn" href="#clockOutModal" value="{{ $timesheet->date.$timesheet->clock_in }}">Clock Out</button></td>
 						</div>
 						
 						@else
 						<td>{{ $timesheet->clock_out }}</td>
 						@endif
 					</tr>
-					
 				@endforeach
 				</tbody>
 			</table>
@@ -122,13 +121,15 @@
 		});
 
 		$('.clock-out-btn').on('click', function() {
-			var logID = $(this).val();
-			// alert(logID);
+			var timesheetDeets = $(this).val();
+			// alert(timesheetDeets);
+			var csrf = $('[name="csrf-token"]').attr("content");
 			// alert(csrf);
 
-			$.get('/timesheet/complete-log/' + logID,
+			$.post('/timesheet/complete-log-without-id/',
 				{
-					// 
+					timesheet: timesheetDeets,
+					_token: csrf
 				},
 				function(data, status) {
 					$('#clockOutDetails').html(data);
@@ -143,13 +144,6 @@
 				function(data, status) {
 					$('#newLogDetails').html(data);
 				});
-		});
-
-		$('.timesheet-row').on('click', function() {
-			var id = $(this).attr('id');
-			id = id.replace("row", "");
-			// alert(id);
-			$('#deleteBtn' + id).toggle();
 		});
 	</script>
 @endsection

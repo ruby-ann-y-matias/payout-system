@@ -14,10 +14,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col s12 m6 l4">
-				<div class="card">
-					<div class="card-image">
-						<img src={{ asset("$employee->image") }} class="responsive-img">
-						<span class="card-title">{{ $employee->id }}</span>
+				<div class="card employee-card">
+					<div class="card-image halfway-fab-header">
 						<button id="editBtn" class="btn-floating halfway-fab waves-effect waves-light red darken-4"><i class="material-icons">edit</i></button>
 					</div>
 					<div id="currentInfo" class="card-content">
@@ -90,7 +88,7 @@
 			</div>
 
 			<div class="col s12 m6 l4">
-				<div class="card">
+				<div class="card employee-card">
 					<div class="card-content">
 						<h5>{{ $today }}</h5>
 					</div>
@@ -212,6 +210,91 @@
 	
 					</div>
 
+				</div>
+			</div>
+
+			<div class="col s12 m6 l4">
+				<div class="card employee-card hide-on-med-and-down">
+					<div class="card-image">
+						<img src={{ asset("$employee->image") }}>
+					</div>
+				</div>
+			</div>
+
+			<div class="col s12">
+				<div class="card">
+					<div class="card-content">
+						<table id="logsTable" class="responsive-table centered striped highlight">
+							<h6 class="flow-text indigo-text history-owner">{{ $employee->name }}</h6>
+							<thead>
+								<th>Job</th>
+								<th>Date</th>
+								<th>Clock In</th>
+								<th>Clock Out</th>
+							</thead>
+							<tbody>
+
+							@if (!$history->isEmpty())
+								@foreach($history as $past)
+								<tr>
+									<td>{{ $past->job->job }}</td>
+									<td >{{ $past->date }}</td>
+									<td>{{ $past->clock_in }}</td>
+									<td>{{ $past->clock_out }}</td>
+								</tr>
+								@endforeach
+							@else
+								<tr>
+									<td class="info-text">No past logs.</td>
+									<td class="info-text"> </td>
+									<td class="info-text"> </td>
+									<td class="info-text"> </td>
+									<td class="info-text"> </td>
+								</tr>
+							@endif
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="col s12">
+				<div class="card">
+					<div class="card-content">
+						<table id="logsTable" class="responsive-table centered striped highlight">
+							<h6 class="flow-text indigo-text history-owner">Payout</h6>
+							<thead>
+								<th>Job</th>
+								<th>Date</th>
+								<th>Hours Worked</th>
+								<th>Wage</th>
+								<th>Status</th>
+							</thead>
+							<tbody>
+
+							@if (!$wages->isEmpty())
+								@foreach($wages as $wage)
+								<tr>
+									<td>{{ $wage->job->job }}</td>
+									<td>{{ $wage->date }}</td>
+									<td>{{ $wage->hours }}</td>
+									<td><strong>USD</strong> {{ $wage->wage }}</td>
+									<td>{{ $wage->status->status }}</td>
+								</tr>
+								@endforeach
+							@else
+								<tr>
+									<td class="info-text">No past payout.</td>
+									<td class="info-text"> </td>
+									<td class="info-text"> </td>
+									<td class="info-text"> </td>
+									<td class="info-text"> </td>
+									<td class="info-text"> </td>
+								</tr>
+							@endif
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

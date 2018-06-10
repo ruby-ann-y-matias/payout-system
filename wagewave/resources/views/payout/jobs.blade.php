@@ -19,6 +19,7 @@
 			@foreach($jobs as $job)
 			<li><a href={{ url("job/$job->id") }} class="black-text">{{ $job->job }}</a></li>
 			@endforeach
+			<li><a href="#"> <a></li>
 		</ul>
 
 		{{-- {{ $jobs->links() }} --}}

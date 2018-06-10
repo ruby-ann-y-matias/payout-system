@@ -40,7 +40,10 @@ class EmployeeController extends Controller
                         ['date', '=', $date]
                     ])->get();
 
-    	return view('employees.view', compact('employee', 'today', 'logs', 'jobs', 'payouts'));
+        $history = Timesheet::where('employee_id', '=', $id)->get();
+        $wages = Payout::where('employee_id', '=', $id)->get();
+
+    	return view('employees.view', compact('employee', 'today', 'logs', 'jobs', 'payouts', 'history', 'wages'));
     }
 
     function updateInfo(Request $request, $id) {
@@ -151,6 +154,7 @@ class EmployeeController extends Controller
         $payout = new Payout();
         $payout->employee_id = $request->employee_id;
         $payout->job_id = $timesheet->job_id;
+        $payout->timesheet_id = $timesheet->id;
         $payout->date = $timesheet->date;
         $payout->hours = $hours;
         $payout->wage = $hours * $job->hourly_rate;
@@ -162,17 +166,39 @@ class EmployeeController extends Controller
 
     function completeLog($id) {
         $timesheet = Timesheet::find($id);
-        
+        // dd($timesheet);
         $start_date = new DateTime($timesheet->date);
         $start_date->modify('+1 day');
         $max_date = $start_date->format('Y-m-j');
         // echo $max_date;
-        
         $one_hour_lapse = strtotime($timesheet->clock_in) + 60*60;
         $min_time = date('H:i:s', $one_hour_lapse);
         // echo $min_time;
-
         return view('employees.complete-log', compact('timesheet', 'max_date', 'min_time'));
+    }
+
+    function completeLogWithoutId(Request $request) {
+        // dd($request);
+        $date = substr($request->timesheet, 0, 10);
+        $clock_in = substr($request->timesheet, 10, 8);
+        // echo $date . ' ' . $clock_in;
+        $logs = Timesheet::where([
+                            ['date', '=', $date],
+                            ['clock_in', '=', $clock_in],
+                        ])->get();
+        // dd($logs);
+        foreach ($logs as $log) {
+            $timesheet = Timesheet::find($log->id);
+            // dd($timesheet);
+            $start_date = new DateTime($timesheet->date);
+            $start_date->modify('+1 day');
+            $max_date = $start_date->format('Y-m-j');
+            // echo $max_date;
+            $one_hour_lapse = strtotime($timesheet->clock_in) + 60*60;
+            $min_time = date('H:i:s', $one_hour_lapse);
+            // echo $min_time;
+            return view('employees.complete-log', compact('timesheet', 'max_date', 'min_time'));
+        }   
     }
 
     function lateLogOut(Request $request) {
@@ -201,6 +227,7 @@ class EmployeeController extends Controller
         $payout = new Payout();
         $payout->employee_id = $timesheet->employee_id;
         $payout->job_id = $timesheet->job_id;
+        $payout->timesheet_id = $timesheet->id;
         $payout->date = $timesheet->date;
         $payout->hours = $hours;
         $payout->wage = $hours * $job->hourly_rate;
@@ -225,6 +252,7 @@ class EmployeeController extends Controller
 
     function deleteLog(Request $request) {
         $timesheet = Timesheet::find($request->timesheet_id);
+        // dd($timesheet);
         $timesheet->delete();
 
         alert()->success("Incorrect log was deleted successfully.")->autoclose(6000);
@@ -237,5 +265,42 @@ class EmployeeController extends Controller
         $jobs = Job::all();
 
         return view('employees.new-log', compact('employees', 'jobs'));
+    }
+
+    function saveLog(Request $request) {
+        $job = Job::find($request->job_id);
+        // dd($request);
+        $start = $request->start_date . ' ' . $request->clock_in;
+        $start = strtotime($start);
+        $end = $request->end_date . ' ' . $request->clock_out;
+        $end = strtotime($end);
+        $hours = abs($start - $end) / 3600;
+        // echo $hours;
+        $clock_in = date('H:i:s', $start);
+        $clock_out = date('H:i:s', $end);
+
+        $timesheet = new Timesheet();
+        $timesheet->employee_id = $request->employee_id;
+        $timesheet->job_id = $request->job_id;
+        $timesheet->job_id = $request->job_id;
+        $timesheet->date = $request->start_date;
+        $timesheet->clock_in = $clock_in;
+        $timesheet->clock_out = $clock_out;
+        $timesheet->save();
+
+        $payout = new Payout();
+        $payout->employee_id = $timesheet->employee_id;
+        $payout->job_id = $timesheet->job_id;
+        $payout->timesheet_id = $timesheet->id;
+        $payout->date = $timesheet->date;
+        $payout->hours = $hours;
+        $payout->wage = $hours * $job->hourly_rate;
+        $payout->status_id = 1;
+        $payout->save();
+
+        Alert::success("New log was saved.")->autoclose(6000);
+        // alert()->success("New log was saved.")->autoclose(6000);
+
+        return redirect()->back();
     }
 }

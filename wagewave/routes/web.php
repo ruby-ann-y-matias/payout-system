@@ -53,11 +53,40 @@ Route::post('/timesheet/clock-out/{id}', 'EmployeeController@clockOut');
 
 Route::get('/timesheet/complete-log/{id}', 'EmployeeController@completeLog');
 
+Route::post('/timesheet/complete-log-without-id', 'EmployeeController@completeLogWithoutId');
+
 Route::post('/timesheet/late-log-out', 'EmployeeController@lateLogOut');
 
 Route::delete('/timesheet/delete/{id}', 'EmployeeController@deleteLog');
 
 Route::get('/timesheet/new-log', 'EmployeeController@newLog');
+
+Route::post('/timesheet/save-log', 'EmployeeController@saveLog');
+
+Route::get('/timesheet/sort-by-name', 'PayoutController@sortByName');
+
+Route::get('/timesheet/sort-by-job', 'PayoutController@sortByJob');
+
+Route::get('/timesheet/sort-by-date', 'PayoutController@sortByDate');
+
+Route::get('/timesheet/sort-by-priority', 'PayoutController@sortByPriority');
+
+Route::delete('/timesheet/multi-delete', 'PayoutController@multiDelete');
+
+Route::get('/payout', 'PayoutController@checkWages');
+
+Route::get('/payout/sort-by-name', 'PayoutController@sortName');
+
+Route::get('/payout/sort-by-job', 'PayoutController@sortJob');
+
+Route::get('/payout/sort-by-date', 'PayoutController@sortDate');
+
+Route::get('/payout/sort-by-hours', 'PayoutController@sortHours');
+
+Route::get('/payout/sort-by-wage', 'PayoutController@sortWage');
+
+Route::get('/payout/sort-by-priority', 'PayoutController@sortPriority');
+
 
 
 

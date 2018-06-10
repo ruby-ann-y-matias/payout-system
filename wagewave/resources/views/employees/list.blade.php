@@ -20,6 +20,7 @@
 			@foreach($employees as $employee)
 			<li><a href={{ url("/employee/$employee->id") }} class="black-text">{{ $employee->name }}</a></li>
 			@endforeach
+			<li><a href="#"> <a></li>
 		</ul>
 
 		{{-- {{ $employees->links() }} --}}
