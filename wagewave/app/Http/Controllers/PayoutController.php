@@ -110,6 +110,13 @@ class PayoutController extends Controller
         return view('payout.payout', compact('payout'));
     }
 
+    function sortPriority() {
+        $payout = Payout::all();
+        $payout = $payout->sortBy('status');
+        
+        return view('payout.payout', compact('payout'));
+    }
+
     function sortName() {
 
         $payout = DB::table('payouts')
