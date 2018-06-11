@@ -65,7 +65,7 @@ class PayoutController extends Controller
 
         $jobs = Job::all();
 
-        alert()->success("$temp has been deleted successfully from the jobs' list.")->autoclose(6000);
+        alert()->success("$temp deleted", 'Successfully')->autoClose(5000);
 
         return view('payout.jobs', compact('jobs'));
     }
@@ -176,7 +176,7 @@ class PayoutController extends Controller
             }
         }
 
-        Alert::success("Successfully deleted.")->autoclose(6000);
+        alert()->success('Logs Deleted', 'Successfully')->autoClose(5000);
 
         return redirect()->back();
     }

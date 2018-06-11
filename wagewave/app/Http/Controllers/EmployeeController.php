@@ -245,7 +245,7 @@ class EmployeeController extends Controller
 
         $employees = Employee::all();
 
-        alert()->success("$temp's account was deleted successfully.")->autoclose(6000);
+        alert()->success("$temp's account deleted", 'Successfully')->autoClose(5000);
 
         return view('employees.list', compact('employees'));
     }
@@ -255,7 +255,7 @@ class EmployeeController extends Controller
         // dd($timesheet);
         $timesheet->delete();
 
-        alert()->success("Incorrect log was deleted successfully.")->autoclose(6000);
+        alert()->success('Log Deleted', 'Successfully')->autoClose(5000);
 
         return redirect()->back();
     }
@@ -298,8 +298,7 @@ class EmployeeController extends Controller
         $payout->status_id = 1;
         $payout->save();
 
-        Alert::success("New log was saved.")->autoclose(6000);
-        // alert()->success("New log was saved.")->autoclose(6000);
+        alert()->success('Log Saved', 'Successfully')->autoClose(5000);
 
         return redirect()->back();
     }

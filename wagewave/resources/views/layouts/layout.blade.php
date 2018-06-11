@@ -105,10 +105,10 @@
 	<!--Import Materialize JS-->
 	<script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
 
-	<script src="{{ asset('js/sweetalert.min.js') }}"></script>
+	<script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 
     <!-- Include this after the sweet alert js file -->
-    @include('sweet::alert')
+    @include('sweetalert::alert')
 
 	<script type="text/javascript">
 
