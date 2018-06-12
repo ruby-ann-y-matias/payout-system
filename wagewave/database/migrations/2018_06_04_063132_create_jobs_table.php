@@ -21,6 +21,8 @@ class CreateJobsTable extends Migration
             $table->decimal('hourly_rate');
             $table->decimal('weekly_rate')->nullable();
             $table->decimal('monthly_rate')->nullable();
+            $table->time('fixed_start')->nullable();
+            $table->time('fixed_end')->nullable();
             $table->timestamps();
         });
     }

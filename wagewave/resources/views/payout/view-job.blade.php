@@ -13,8 +13,9 @@
 @section('content')
 	<div class="container">
 		<div class="row">
-			<div class="col s12 m4">
-				<div class="card">
+
+			<div class="col s12">
+				<div class="card job-card">
 					<div class="card-image halfway-fab-header">
 						<button id="editBtn" class="btn-floating halfway-fab waves-effect waves-light red darken-4"><i class="material-icons">edit</i></button>
 					</div>
@@ -29,7 +30,10 @@
 						<p><strong>Weekly Rate: $</strong> {{ number_format($job->weekly_rate, 2, '.', ',') }}</p>
 						<hr>
 						<p><strong>Monthly Rate: $</strong> {{ number_format($job->monthly_rate, 2, '.', ',')  }}</p>
+
 						<button type="button" class="btn waves-effect red darken-4 modal-trigger delete-btn" href="#deleteJobModal"><i class="material-icons">delete_forever</i> Delete Job</button>
+						{{-- <button type="button" class="btn waves-effect modal-trigger add-sched-btn" href="#addSchedModal"><i class="material-icons">add_circle</i> Add Fixed Sched</button> --}}
+
 						<div class="modal" id="deleteJobModal">
 							<div id="deleteModalContent" class="modal-content">
 								<form action="/job/delete/{{ $job->id }}" method="POST">
@@ -45,6 +49,35 @@
 								<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
 							</div>
 						</div>
+
+						{{-- <div class="modal" id="addSchedModal">
+							<div id="addModalContent" class="modal-content">
+								<h5 id="addFixedSchedTitle" class="indigo-text">Add Fixed Schedule</h5>
+								<form action="/job/add-sched/{{ $job->id }}" method="POST">
+									{{ csrf_field() }}
+									<input hidden name="job_id" value="{{ $job->id }}">
+									<div class="row">	
+										<div class="input-field col s12">
+											<label class="active teal-text" for="jobTitle">Job Title:</label>	
+											<input type="text" id="jobTitle" name="job_id" value="{{ $job->job }}" readonly>
+										</div>	
+										<div class="input-filed col s12">
+											<label class="active teal-text" for="fixedStart">Start Time:</label>	
+											<input type="time" id="fixedStart" name="fixed_start">
+										</div>
+										<div class="input-filed col s12">
+											<label class="active teal-text" for="fixedEnd">End Time:</label>
+											<input type="text" id="fixedEnd" name="fixed_end" class="timepicker">	
+										</div>
+									</div>
+									<button type="submit" class="btn waves-effect green accent-5">Save</button>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+							</div>
+						</div> --}}
+						
 					</div>
 					<div id="editInfo" class="card-content" hidden>
 						<form id="editForm" action={{ url("/job/$job->id/update") }} method="POST">
@@ -86,6 +119,7 @@
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 
@@ -96,6 +130,7 @@
 		
 		$(document).ready(function() {
 			$('.modal').modal();
+			$('.timepicker').timepicker();
 
 			$('#editBtn').click(function() {
 				$('#currentInfo').toggle();

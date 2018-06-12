@@ -14,7 +14,7 @@ class Job extends Model
     	return $this->hasMany('App\Timesheet');
     }
 
-    function history() {
-    	return $this->hasMany('App\History');
+    function deduction() {
+    	return $this->hasMany('App\Deduction');
     }
 }

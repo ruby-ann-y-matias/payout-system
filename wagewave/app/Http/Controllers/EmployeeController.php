@@ -102,7 +102,12 @@ class EmployeeController extends Controller
                         ['date', '=', $date]
                     ])->get();
 
-        return view('employees.view', compact('employee', 'today', 'logs', 'payouts', 'jobs'));
+        $history = Timesheet::where('employee_id', '=', $employee->id)->get();
+        $wages = Payout::where('employee_id', '=', $employee->id)->get();
+
+        alert()->success('New employee saved', 'Successfully');
+
+        return view('employees.view', compact('employee', 'today', 'logs', 'payouts', 'jobs', 'history', 'wages'));
     }
 
     function checkLogs() {
@@ -234,6 +239,8 @@ class EmployeeController extends Controller
         $payout->status_id = 1;
         $payout->save();
 
+        alert()->success('Log completed', 'Successfully');
+
         return redirect()->back();
     }
 
@@ -245,7 +252,7 @@ class EmployeeController extends Controller
 
         $employees = Employee::all();
 
-        alert()->success("$temp's account deleted", 'Successfully')->autoClose(5000);
+        alert()->success("$temp's account deleted", 'Successfully');
 
         return view('employees.list', compact('employees'));
     }
@@ -255,7 +262,7 @@ class EmployeeController extends Controller
         // dd($timesheet);
         $timesheet->delete();
 
-        alert()->success('Log Deleted', 'Successfully')->autoClose(5000);
+        alert()->success('Log Deleted', 'Successfully');
 
         return redirect()->back();
     }
@@ -268,37 +275,47 @@ class EmployeeController extends Controller
     }
 
     function saveLog(Request $request) {
-        $job = Job::find($request->job_id);
-        // dd($request);
-        $start = $request->start_date . ' ' . $request->clock_in;
-        $start = strtotime($start);
-        $end = $request->end_date . ' ' . $request->clock_out;
-        $end = strtotime($end);
-        $hours = abs($start - $end) / 3600;
-        // echo $hours;
-        $clock_in = date('H:i:s', $start);
-        $clock_out = date('H:i:s', $end);
+        $incomplete = Timesheet::where([
+                        ['employee_id', '=', $request->employee_id],
+                        ['date', '=', $request->start_date],
+                        ['clock_out', '=', null],
+                    ])->get();
+        // dd($incomplete);
+        if (empty($incomplete)) {
+            $job = Job::find($request->job_id);
 
-        $timesheet = new Timesheet();
-        $timesheet->employee_id = $request->employee_id;
-        $timesheet->job_id = $request->job_id;
-        $timesheet->job_id = $request->job_id;
-        $timesheet->date = $request->start_date;
-        $timesheet->clock_in = $clock_in;
-        $timesheet->clock_out = $clock_out;
-        $timesheet->save();
+            $start = $request->start_date . ' ' . $request->clock_in;
+            $start = strtotime($start);
+            $end = $request->end_date . ' ' . $request->clock_out;
+            $end = strtotime($end);
+            $hours = abs($start - $end) / 3600;
+            // echo $hours;
+            $clock_in = date('H:i:s', $start);
+            $clock_out = date('H:i:s', $end);
 
-        $payout = new Payout();
-        $payout->employee_id = $timesheet->employee_id;
-        $payout->job_id = $timesheet->job_id;
-        $payout->timesheet_id = $timesheet->id;
-        $payout->date = $timesheet->date;
-        $payout->hours = $hours;
-        $payout->wage = $hours * $job->hourly_rate;
-        $payout->status_id = 1;
-        $payout->save();
+            $timesheet = new Timesheet();
+            $timesheet->employee_id = $request->employee_id;
+            $timesheet->job_id = $request->job_id;
+            $timesheet->job_id = $request->job_id;
+            $timesheet->date = $request->start_date;
+            $timesheet->clock_in = $clock_in;
+            $timesheet->clock_out = $clock_out;
+            $timesheet->save();
 
-        alert()->success('Log Saved', 'Successfully')->autoClose(5000);
+            $payout = new Payout();
+            $payout->employee_id = $timesheet->employee_id;
+            $payout->job_id = $timesheet->job_id;
+            $payout->timesheet_id = $timesheet->id;
+            $payout->date = $timesheet->date;
+            $payout->hours = $hours;
+            $payout->wage = $hours * $job->hourly_rate;
+            $payout->status_id = 1;
+            $payout->save();
+
+            alert()->success('Log Saved', 'Successfully');
+        } else {
+            alert()->error('Oops!', "Employee has not yet clocked out of a previously started job.");
+        }
 
         return redirect()->back();
     }

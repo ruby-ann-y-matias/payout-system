@@ -16,13 +16,25 @@ class CreateDeductionsTable extends Migration
         Schema::create('deductions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
-            $table->decimal('advance');
-            $table->date('date_given');
+            $table->integer('timesheet_id')->unsigned();
+            $table->integer('job_id')->unsigned();
+            $table->decimal('deduction');
+            $table->date('date');
             $table->timestamps();
 
             $table->foreign('employee_id')
                     ->references('id')
                     ->on('employees')
+                    ->onDelete('cascade');
+
+            $table->foreign('timesheet_id')
+                    ->references('id')
+                    ->on('timesheets')
+                    ->onDelete('cascade');
+
+            $table->foreign('job_id')
+                    ->references('id')
+                    ->on('jobs')
                     ->onDelete('cascade');
         });
     }

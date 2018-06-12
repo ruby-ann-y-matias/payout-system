@@ -36,7 +36,7 @@
 					<label class="active" for="address">Address:</label>
 				</div>
 				<div class="input-field col s12">
-					<input type="date" id="birthDate" name="birth_date" class="validate" min="2000-06-12" max="1958-06-12">
+					<input type="date" id="birthDate" name="birth_date" class="validate" max="2000-06-12" min="1958-06-12">
 					<label class="active" for="birthDate">Birth Date:</label>
 				</div>
 				<div class="input-field col s12">

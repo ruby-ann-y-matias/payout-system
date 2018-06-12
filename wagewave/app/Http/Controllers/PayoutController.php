@@ -65,7 +65,7 @@ class PayoutController extends Controller
 
         $jobs = Job::all();
 
-        alert()->success("$temp deleted", 'Successfully')->autoClose(5000);
+        alert()->success("$temp deleted", 'Successfully');
 
         return view('payout.jobs', compact('jobs'));
     }
@@ -124,7 +124,7 @@ class PayoutController extends Controller
             ->leftJoin('jobs', 'payouts.job_id', '=', 'jobs.id')
             ->leftJoin('statuses', 'payouts.status_id', '=', 'statuses.id')
             ->orderBy('employees.name')->get();
-        // dd($logs);
+        // dd($payout);
         return view('payout.sorted-payout', compact('payout'));
     }
 
@@ -135,7 +135,7 @@ class PayoutController extends Controller
             ->leftJoin('jobs', 'payouts.job_id', '=', 'jobs.id')
             ->leftJoin('statuses', 'payouts.status_id', '=', 'statuses.id')
             ->orderBy('jobs.job')->get();
-        // dd($logs);
+        // dd($payout);
         return view('payout.sorted-payout', compact('payout'));
     }
 
@@ -183,7 +183,27 @@ class PayoutController extends Controller
             }
         }
 
-        alert()->success('Logs Deleted', 'Successfully')->autoClose(5000);
+        alert()->success('Log Deleted', 'Successfully');
+
+        return redirect()->back();
+    }
+
+    function confirmPayout(Request $request) {
+        $payout = Payout::find($request->wage_id);
+
+        return view('payout.confirm-payout', compact('payout'));
+    }
+
+    function confirmSortedPayout(Request $request) {
+        $payout = Payout::where('timesheet_id', '=', $request->timesheet_id)->get();
+        // dd($payout);
+        return view('payout.confirm-sorted-payout', compact('payout'));
+    }
+
+    function updateStatus(Request $request) {
+        $payout = Payout::find($request->payout_id);
+        $payout->status_id = 2;
+        $payout->save();
 
         return redirect()->back();
     }

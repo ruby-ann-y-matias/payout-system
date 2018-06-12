@@ -13,14 +13,11 @@
         <div class="row">
 
             <div class="card grey lighten-4 dash-card">
-                <div id="dashTitle" class="card-title indigo-text">Dashboard</div>
+                <div id="dashTitle" class="card-title indigo-text">Dashboard
+                    <span id="adminCredentials" class="indigo-text right">Admin: {{ Auth::user()->name}} logged in</span>
+                </div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
 
                     <div class="row">
                         <div class="mini-con col s12 m6 l3">

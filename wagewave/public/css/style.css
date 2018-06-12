@@ -69,14 +69,14 @@
 /* iPad Mini, iPad Air, iPad Pro PORTRAIT */
 @media only screen and (min-width: 767px) and (max-width: 1022px) {
 	.container {
-		width: 58vw;
+		width: 59vw;
 	}
 }
 
 /* iPad Mini, iPad Air LANDSCAPE */
 @media only screen and (min-width: 1023px) and (max-width: 1279px) {
 	.container {
-		width: 68vw;
+		width: 69vw;
 	}
 }
 
@@ -87,11 +87,24 @@
 	}
 }
 
-@media only screen and (min-width: 1369px) {
+@media only screen and (min-width: 1369px) and (max-width: 1679px) {
 	.container {
-		width: 77vw;
+		width: 78vw;
 	}
 }
+
+@media only screen and (min-width: 1680px) {
+	.container {
+		width: 100vw;
+		right: 50px;
+	}
+}
+
+/*@media only screen and (min-width: 1467px) {
+	.container {
+		width: 85vw;
+	}
+}*/
 
 /* DASHBOARD */
 
@@ -108,6 +121,7 @@
 	padding: 35px;
 	border-radius: 50%;
 	background-color: lightgrey;
+	z-index: 0;
 }
 
 .mini-card:hover {
@@ -117,6 +131,12 @@
 #dashTitle {
 	margin-bottom: 10px;
 	font-family: 'Kavoon', cursive;
+}
+
+#adminCredentials {
+	margin-bottom: 10px;
+	font-family: 'Tillana', cursive;
+	font-size: 0.6em;
 }
 
 /* EMPLOYEES & JOBS */
@@ -211,12 +231,17 @@
 	margin-left: 12px;
 }
 
+.add-sched-btn,
 .delete-btn {
 	margin-top: 15px;
 }
 
 .job-title {
 	font-family: 'Kavoon', cursive;
+}
+
+#addFixedSchedTitle {
+	margin-bottom: 30px;
 }
 
 #deleteModalContent {
@@ -245,17 +270,29 @@
 	.employee-card {
 		min-height: 45vh;
 	}
+
+	.job-card {
+		min-height: 59vh;
+	}
 }
 
 @media only screen and (min-width: 767px) and (max-width: 991px) {
 	.employee-card {
 		min-height: 47vh;
 	}
+
+	.job-card {
+		min-height: 36vh;
+	}
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1025px) {
 	.employee-card {
 		min-height: 40vh;
+	}
+
+	.job-card {
+		min-height: 100vh;
 	}
 }
 
@@ -342,4 +379,30 @@ table.highlight > tbody > tr:hover {
 	padding: 10px;
 	color: #45451F; /* PIER */
 	background-color: #C2E6FF; /* POWDER BLUE */
+}
+
+/* PAYOUT */
+
+#confirmPayoutTitle {
+	margin-bottom: 30px;
+}
+
+#amountLabel {
+	font-size: 1.5em;
+	text-align: center;
+}
+
+#amountInput {
+	margin-top: 20px;
+	text-align: center;
+	font-weight: bolder;
+	font-size: 3em;
+}
+
+.payout-option {
+	margin-bottom: 10px;
+}
+
+#paypalLogo {
+	margin-top: 5px;
 }

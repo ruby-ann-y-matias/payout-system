@@ -13,4 +13,12 @@ class Timesheet extends Model
     function job() {
     	return $this->belongsTo('App\Job');
     }
+
+    function payout() {
+    	return $this->belongsTo('App\Payout');
+    }
+
+    function deduction() {
+    	return $this->hasOne('App\Deduction');
+    }
 }

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Alert;
 
 class LoginController extends Controller
 {
@@ -40,5 +42,14 @@ class LoginController extends Controller
     public function username()
     {
         return 'username';
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        if($user->verified==0) {
+            \Auth::logout();
+            alert()->error('Oops!', 'Please verify your email first.')->autoClose(5000);
+            return redirect('/login');
+        }
     }
 }

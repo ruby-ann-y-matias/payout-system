@@ -50,6 +50,9 @@
 		if (startDate != selectedDate) {
 			$('#clock_out').removeAttr('min');
 			$('#clock_out').attr('max', startTime);
+		} else {
+			$('#clock_out').removeAttr('max');
+			$('#clock_out').attr('min', startTime);
 		}
 	});
 </script>

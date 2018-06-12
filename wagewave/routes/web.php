@@ -87,6 +87,14 @@ Route::get('/payout/sort-by-wage', 'PayoutController@sortWage');
 
 Route::get('/payout/sort-by-priority', 'PayoutController@sortPriority');
 
+Route::post('/confirm-payout', 'PayoutController@confirmPayout');
+
+Route::post('/confirm-sorted-payout', 'PayoutController@confirmSortedPayout');
+
+Route::post('/payout/send-via-paypal', 'PaypalController@sendPayout');
+
+Route::post('/payout/update-status', 'PayoutController@updateStatus');
+
 
 
 

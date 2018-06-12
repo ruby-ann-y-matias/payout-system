@@ -214,7 +214,7 @@
 			</div>
 
 			<div class="col s12 m6 l4">
-				<div class="card employee-card hide-on-med-and-down">
+				<div class="card employee-card hide-on-med-and-down valign-wrapper">
 					<div class="card-image">
 						<img src={{ asset("$employee->image") }}>
 					</div>

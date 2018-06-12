@@ -56,18 +56,7 @@
 						<td>{{ $wage->hours }}</td>
 						<td><strong>$</strong> {{ $wage->wage }}</td>
 						@if ($wage->status->status == 'pending')
-						<div class="clock-out">
-						<td><button class="btn teal modal-trigger" href="#clockOutModal" id="clockOut" value="{{ $wage->id }}">Pay Now</button></td>
-						</div>
-						<div class="modal" id="clockOutModal">
-							<div id="clockOutDetails" class="modal-content">
-								
-							</div>
-							<div class="modal-footer">
-								<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-							</div>
-						</div>
-						<td id="missingLog" hidden></td>
+						<td><button class="btn teal modal-trigger pay-now-btn" href="#payoutModal" value="{{ $wage->id }}">Pay Now</button></td>
 						@else
 						<td>{{ $wage->status->status }}</td>
 						@endif
@@ -76,17 +65,19 @@
 				</tbody>
 			</table>
 
+			<div class="modal" id="payoutModal">
+				<div id="payoutModalContent" class="modal-content">
+					
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+				</div>
+			</div>
+
 		@else
 
 		<div class="empty-container">
 			<h5 class="empty-msg center-align indigo-text">No payout found.</h5>
-			
-			<div class="modal" id="newLogModal">
-				<div id="newLogDetails" class="modal-content">
-					
-				</div>
-			</div>
-
 		</div>
 
 		@endif
@@ -101,6 +92,21 @@
 		$(document).ready(function() {
 			$('.modal').modal();
 			$('.dropdown-trigger').dropdown();
+		});
+
+		$('.pay-now-btn').on('click', function() {
+			var wageID = $(this).val();
+			var csrf = $('[name="csrf-token"]').attr('content');
+			// console.log(csrf);
+			// console.log(wageID);
+			$.post('/confirm-payout/',
+				{
+					wage_id: wageID,
+					_token: csrf
+				},
+				function(data, status) {
+					$('#payoutModalContent').html(data);
+				});
 		});
 
 	</script>

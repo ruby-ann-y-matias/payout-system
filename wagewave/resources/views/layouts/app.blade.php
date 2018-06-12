@@ -78,6 +78,11 @@
     <!-- Import jQuery -->      
     <script type="text/javascript" src="{{ asset('lib/jquery-3.2.1.min.js') }}"></script>
 
+    <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
+
+    <!-- Include this after the sweet alert js file -->
+    @include('sweetalert::alert')
+
     @yield('indiv_js')
 
     <script src="{{ asset('lib/bootstrap-password-toggler.min.js') }}"></script>

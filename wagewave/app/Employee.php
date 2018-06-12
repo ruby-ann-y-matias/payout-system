@@ -21,8 +21,4 @@ class Employee extends Model
     function contribution() {
     	return $this->hasMany('App\Contribution');
     }
-
-    function history() {
-        return $this->hasMany('App\History');
-    }
 }
