@@ -61,7 +61,7 @@
 				@foreach($logs as $timesheet)
 					<tr id="row{{ $timesheet->id }}" class="timesheet-row">
 						<td><label>
-								<input type="checkbox" name="deleteLogs[]" value="{{ $timesheet->date.$timesheet->clock_in.$timesheet->clock_out }}">
+								<input type="checkbox" name="deleteLogs[]" value="{{ $timesheet->date.$timesheet->clock_in.$timesheet->clock_out }}" required>
 								<span class="invisible-text">{{ $timesheet->id }}</span>
 							</label>
 						</td>
@@ -151,5 +151,17 @@
 			// alert(id);
 			$('#deleteBtn' + id).toggle();
 		});
+
+		$(function() {
+            var requiredCheckboxes = $(':checkbox[required]');
+
+            requiredCheckboxes.change(function(){
+                if(requiredCheckboxes.is(':checked')) {
+                    requiredCheckboxes.removeAttr('required');
+                } else {
+                    requiredCheckboxes.attr('required', 'required');
+                }
+            });
+        });
 	</script>
 @endsection

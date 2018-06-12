@@ -106,7 +106,7 @@
 							</div>
 							<div class="todays-log">
 								<h6 class="job-title">{{ $timesheet->job->job }}</h6>
-								<p><small class="indigo-text">Hourly Rate: USD {{ $timesheet->job->hourly_rate }}</small></p>
+								<p><small class="indigo-text">Hourly Rate: $ {{ $timesheet->job->hourly_rate }}</small></p>
 								<p><strong>Time In: </strong>{{ $timesheet->clock_in }}</p>
 								<p><strong>Time Out: </strong>{{ $timesheet->clock_out }}</p>
 							</div>
@@ -139,7 +139,7 @@
 							<div class="todays-log">
 
 								<h6 class="job-title">{{ $timesheet->job->job }}</h6>
-								<p><small class="indigo-text">Hourly Rate: USD {{ $timesheet->job->hourly_rate }}</small></p>
+								<p><small class="indigo-text">Hourly Rate: $ {{ $timesheet->job->hourly_rate }}</small></p>
 								<p><strong>Time In: </strong>{{ $timesheet->clock_in }}</p>
 								<p><strong>Time Out: </strong>{{ $timesheet->clock_out }}</p>
 
@@ -170,7 +170,7 @@
 									@foreach($payouts as $payout)
 
 									<p><strong>Hours Worked: </strong>{{ number_format($payout->hours, 2, '.', ',') }}</p>
-									<p><strong>Wage Earned: USD </strong>{{ number_format($payout->wage, 2, '.', ',') }}</p>
+									<p><strong>Wage Earned: $ </strong>{{ number_format($payout->wage, 2, '.', ',') }}</p>
 
 									@endforeach
 
@@ -278,7 +278,7 @@
 									<td>{{ $wage->job->job }}</td>
 									<td>{{ $wage->date }}</td>
 									<td>{{ $wage->hours }}</td>
-									<td><strong>USD</strong> {{ $wage->wage }}</td>
+									<td><strong>$</strong> {{ $wage->wage }}</td>
 									<td>{{ $wage->status->status }}</td>
 								</tr>
 								@endforeach

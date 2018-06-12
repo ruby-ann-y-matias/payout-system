@@ -1,5 +1,5 @@
 <h6 class="job-title">{{ $timesheet->job->job }}</h6>
-<p><small class="indigo-text">Hourly Rate: USD {{ $timesheet->job->hourly_rate }}</small></p>
+<p><small class="indigo-text">Hourly Rate: $ {{ $timesheet->job->hourly_rate }}</small></p>
 <p><strong>Time In: </strong>{{ $timesheet->clock_in }}</p>
 <p><strong>Time Out: </strong>{{ $timesheet->clock_out }}</p>
 

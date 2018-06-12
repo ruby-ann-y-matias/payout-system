@@ -54,7 +54,7 @@
 						<td>{{ $wage->job->job }}</td>
 						<td >{{ $wage->date }}</td>
 						<td>{{ $wage->hours }}</td>
-						<td><strong>USD</strong> {{ $wage->wage }}</td>
+						<td><strong>$</strong> {{ $wage->wage }}</td>
 						@if ($wage->status->status == 'pending')
 						<div class="clock-out">
 						<td><button class="btn teal modal-trigger" href="#clockOutModal" id="clockOut" value="{{ $wage->id }}">Pay Now</button></td>
