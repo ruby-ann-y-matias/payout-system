@@ -406,3 +406,11 @@ table.highlight > tbody > tr:hover {
 #paypalLogo {
 	margin-top: 5px;
 }
+
+.paid-total-info {
+	display: inline-block;
+}
+
+.paid-total-info small {
+	font-family: 'Tillana', cursive;
+}

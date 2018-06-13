@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');
 
-Route::get('/employees', 'EmployeeController@listAll');
+Route::get('/employees', 'EmployeeController@listAll')->middleware('auth');
 
 Route::get('/employee/{id}', 'EmployeeController@viewIndividual');
 
@@ -33,7 +33,7 @@ Route::post('/employees/save-new', 'EmployeeController@saveNew');
 
 Route::delete('/employee/delete/{id}', 'EmployeeController@deleteEmployee');
 
-Route::get('/jobs', 'PayoutController@listJobs');
+Route::get('/jobs', 'PayoutController@listJobs')->middleware('auth');
 
 Route::get('/job/{id}', 'PayoutController@viewJob');
 
@@ -45,7 +45,7 @@ Route::post('/jobs/save-new', 'PayoutController@saveJob');
 
 Route::delete('/job/delete/{id}', 'PayoutController@deleteJob');
 
-Route::get('/timesheet', 'EmployeeController@checkLogs');
+Route::get('/timesheet', 'EmployeeController@checkLogs')->middleware('auth');
 
 Route::post('/timesheet/clock-in/{id}', 'EmployeeController@clockIn');
 
@@ -73,7 +73,7 @@ Route::get('/timesheet/sort-by-priority', 'PayoutController@sortByPriority');
 
 Route::delete('/timesheet/multi-delete', 'PayoutController@multiDelete');
 
-Route::get('/payout', 'PayoutController@checkWages');
+Route::get('/payout', 'PayoutController@checkWages')->middleware('auth');
 
 Route::get('/payout/sort-by-name', 'PayoutController@sortName');
 

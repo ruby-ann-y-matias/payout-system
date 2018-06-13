@@ -77,7 +77,8 @@ class PayoutController extends Controller
             ->leftJoin('jobs', 'timesheets.job_id', '=', 'jobs.id')
             ->orderBy('employees.name')->get();
         // dd($logs);
-        return view('employees.sorted-logs', compact('logs'));
+        $criteria = 'by Name';
+        return view('employees.sorted-logs', compact('logs', 'criteria'));
     }
 
     function sortByJob() {
@@ -87,34 +88,53 @@ class PayoutController extends Controller
             ->leftJoin('jobs', 'timesheets.job_id', '=', 'jobs.id')
             ->orderBy('jobs.job')->get();
         // dd($logs);
-        return view('employees.sorted-logs', compact('logs'));
+        $criteria = 'by Job';
+        return view('employees.sorted-logs', compact('logs', 'criteria'));
     }
 
     function sortByDate() {
         $logs = Timesheet::all();
         $logs = $logs->sortBy('date');
-        
-        return view('employees.logs', compact('logs'));
+        $criteria = 'by Date';
+        return view('employees.logs', compact('logs', 'criteria'));
     }
 
     function sortByPriority() {
         $logs = Timesheet::all();
         $logs = $logs->sortBy('clock_out');
-        
-        return view('employees.logs', compact('logs'));
+        $criteria = 'by Priority';
+        return view('employees.logs', compact('logs', 'criteria'));
     }
 
     function checkWages() {
         $payout = Payout::all();
-
-        return view('payout.payout', compact('payout'));
+        // dd($payout);
+        $paid = array();
+        foreach ($payout as $wage) {
+            if ($wage->status_id == 2) {
+                $paid[] = $wage->wage;
+            }
+        }
+        // dd($paid);
+        $paid_total = array_sum($paid);
+        $criteria = '';
+        return view('payout.payout', compact('payout', 'paid_total', 'criteria'));
     }
 
     function sortPriority() {
         $payout = Payout::all();
         $payout = $payout->sortBy('status');
-        
-        return view('payout.payout', compact('payout'));
+
+        $paid = array();
+        foreach ($payout as $wage) {
+            if ($wage->status_id == 2) {
+                $paid[] = $wage->wage;
+            }
+        }
+        // dd($paid);
+        $paid_total = array_sum($paid);
+        $criteria = 'by Priority';
+        return view('payout.payout', compact('payout', 'paid_total', 'criteria'));
     }
 
     function sortName() {
@@ -125,7 +145,16 @@ class PayoutController extends Controller
             ->leftJoin('statuses', 'payouts.status_id', '=', 'statuses.id')
             ->orderBy('employees.name')->get();
         // dd($payout);
-        return view('payout.sorted-payout', compact('payout'));
+        $paid = array();
+        foreach ($payout as $wage) {
+            if ($wage->status_id == 2) {
+                $paid[] = $wage->wage;
+            }
+        }
+        // dd($paid);
+        $paid_total = array_sum($paid);
+        $criteria = 'by Name';
+        return view('payout.sorted-payout', compact('payout', 'paid_total', 'criteria'));
     }
 
     function sortJob() {
@@ -136,32 +165,64 @@ class PayoutController extends Controller
             ->leftJoin('statuses', 'payouts.status_id', '=', 'statuses.id')
             ->orderBy('jobs.job')->get();
         // dd($payout);
-        return view('payout.sorted-payout', compact('payout'));
+        $paid = array();
+        foreach ($payout as $wage) {
+            if ($wage->status_id == 2) {
+                $paid[] = $wage->wage;
+            }
+        }
+        // dd($paid);
+        $paid_total = array_sum($paid);
+        $criteria = 'by Job';
+        return view('payout.sorted-payout', compact('payout', 'paid_total', 'criteria'));
     }
 
     function sortDate() {
         $payout = Payout::all();
         $payout = $payout->sortBy('date');
-        
-        return view('payout.payout', compact('payout'));
+
+        $paid = array();
+        foreach ($payout as $wage) {
+            if ($wage->status_id == 2) {
+                $paid[] = $wage->wage;
+            }
+        }
+        // dd($paid);
+        $paid_total = array_sum($paid);
+        $criteria = 'by Date';
+        return view('payout.payout', compact('payout', 'paid_total', 'criteria'));
     }
 
     function sortHours() {
         $payout = Payout::all();
         $payout = $payout->sortByDesc('hours');
-        
-        return view('payout.payout', compact('payout'));
+
+        $paid = array();
+        foreach ($payout as $wage) {
+            if ($wage->status_id == 2) {
+                $paid[] = $wage->wage;
+            }
+        }
+        // dd($paid);
+        $paid_total = array_sum($paid);
+        $criteria = 'by Hours';
+        return view('payout.payout', compact('payout', 'paid_total', 'criteria'));
     }
 
     function sortWage() {
         $payout = Payout::all();
         $payout = $payout->sortByDesc('wage');
-        
-        return view('payout.payout', compact('payout'));
-    }
 
-    function viewSettings() {
-        return view('payout.settings');
+        $paid = array();
+        foreach ($payout as $wage) {
+            if ($wage->status_id == 2) {
+                $paid[] = $wage->wage;
+            }
+        }
+        // dd($paid);
+        $paid_total = array_sum($paid);
+        $criteria = 'by Wage';
+        return view('payout.payout', compact('payout', 'paid_total', 'criteria'));
     }
 
     function multiDelete(Request $request) {

@@ -113,7 +113,8 @@ class EmployeeController extends Controller
     function checkLogs() {
         $logs = Timesheet::all();
         // dd($logs);
-        return view('employees.logs', compact('logs'));
+        $criteria = '';
+        return view('employees.logs', compact('logs', 'criteria'));
     }
 
     function clockIn(Request $request) {
@@ -281,7 +282,7 @@ class EmployeeController extends Controller
                         ['clock_out', '=', null],
                     ])->get();
         // dd($incomplete);
-        if (empty($incomplete)) {
+        if ($incomplete->isEmpty()) {
             $job = Job::find($request->job_id);
 
             $start = $request->start_date . ' ' . $request->clock_in;

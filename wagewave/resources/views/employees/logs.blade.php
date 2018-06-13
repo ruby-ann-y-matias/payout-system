@@ -25,7 +25,7 @@
 				</div>
 			</div>
 
-			<a class="dropdown-trigger btn-large teal log-actions" href="#dropdownSort"><i class="material-icons">sort</i> Sort Timesheet</a>
+			<a class="dropdown-trigger btn-large teal log-actions" href="#dropdownSort"><i class="material-icons">sort</i> Sort Timesheet {{ $criteria }}</a>
 
 			<ul id="dropdownSort" class="dropdown-content">
 				<li>

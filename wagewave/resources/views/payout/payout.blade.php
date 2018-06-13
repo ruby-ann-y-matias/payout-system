@@ -15,7 +15,9 @@
 		
 		@if (!$payout->isEmpty())
 
-			<a class="dropdown-trigger btn-large teal log-actions" href="#dropdownSort"><i class="material-icons">sort</i> Sort Payout</a>
+			<a class="dropdown-trigger btn-large teal log-actions" href="#dropdownSort"><i class="material-icons">sort</i> Sort Payout {{ $criteria }}</a>
+
+			<h4 class="paid-total-info right"><small>Total Paid Wages:</small> ${{ $paid_total }}</h4>
 
 			<ul id="dropdownSort" class="dropdown-content">
 				<li>
