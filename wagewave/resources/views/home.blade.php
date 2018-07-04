@@ -60,11 +60,30 @@
             </div>
 
         </div>
+
+        <div class="row">
+            
+            <div class="card grey lighten-4">
+                <div class="card-title indigo-text">
+                    <i class="material-icons">pie_chart</i> Reports
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col s12">
+                            <div id="jobDonutDiv">
+                            </div>
+                            <?= Lava::render('DonutChart', 'JobDonut', 'jobDonutDiv'); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 @endsection
 
 @section('indiv_js')
     <script type="text/javascript">
-
     </script>
 @endsection
