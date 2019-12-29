@@ -77,17 +77,17 @@
     </head>
     <body>
 
-        <!-- particles.js container --> 
-        <div id="particles-js"></div> 
-        
-        <!-- stats - count particles --> 
-        {{-- <div class="count-particles"> 
-            <span class="js-count-particles"></span> 
-        </div> --}} 
-        
+        <!-- particles.js container -->
+        <div id="particles-js"></div>
+
+        <!-- stats - count particles -->
+        {{-- <div class="count-particles">
+            <span class="js-count-particles"></span>
+        </div> --}}
+
         <div class="flex-center position-ref full-height">
             <div class="top-right links">
-                <a href="{{ url('/about') }}">About</a>
+                {{-- <a href="{{ url('/about') }}">About</a> --}}
             </div>
 
             <div class="content">
@@ -108,10 +108,10 @@
             </div>
         </div>
 
-        <!-- particles.js lib - https://github.com/VincentGarreau/particles.js --> 
+        <!-- particles.js lib - https://github.com/VincentGarreau/particles.js -->
         <script src="{{ asset('js/particles.min.js') }}"></script>
         {{-- <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> --}}
-        <!-- stats.js lib --> 
+        <!-- stats.js lib -->
         {{-- <script src="http://threejs.org/examples/js/libs/stats.min.js"></script> --}}
 
         <script type="text/javascript">

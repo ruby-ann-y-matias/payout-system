@@ -12,20 +12,25 @@ use Illuminate\Http\Request;
 
 class PayoutController extends Controller
 {
-    function listJobs() {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function listJobs() {
     	$jobs = Job::all();
     	// dd($jobs);
     	return view('payout.jobs', compact('jobs'));
     }
 
-    function viewJob($id) {
+    public function viewJob($id) {
     	$job = Job::find($id);
     	// dd($job);
 
     	return view('payout.view-job', compact('job'));
     }
 
-    function updateJob(Request $request, $id) {
+    public function updateJob(Request $request, $id) {
         // dd($request);
         $job = Job::find($id);
 
@@ -40,11 +45,11 @@ class PayoutController extends Controller
         return redirect()->back();
     }
 
-    function addJob() {
+    public function addJob() {
         return view('payout.add-job');
     }
 
-    function saveJob(Request $request) {
+    public function saveJob(Request $request) {
         // dd($request);
         $job = new Job();
         $job->job = $request->job;
@@ -58,7 +63,7 @@ class PayoutController extends Controller
         return view('payout.view-job', compact('job'));
     }
 
-    function deleteJob(Request $request) {
+    public function deleteJob(Request $request) {
         $job = Job::find($request->job_id);
         $temp = $job->job;
         $job->delete();
@@ -70,7 +75,7 @@ class PayoutController extends Controller
         return view('payout.jobs', compact('jobs'));
     }
 
-    function sortByName() {
+    public function sortByName() {
 
         $logs = DB::table('timesheets')
             ->leftJoin('employees', 'timesheets.employee_id', '=', 'employees.id')
@@ -81,7 +86,7 @@ class PayoutController extends Controller
         return view('employees.sorted-logs', compact('logs', 'criteria'));
     }
 
-    function sortByJob() {
+    public function sortByJob() {
 
         $logs = DB::table('timesheets')
             ->leftJoin('employees', 'timesheets.employee_id', '=', 'employees.id')
@@ -92,21 +97,21 @@ class PayoutController extends Controller
         return view('employees.sorted-logs', compact('logs', 'criteria'));
     }
 
-    function sortByDate() {
+    public function sortByDate() {
         $logs = Timesheet::all();
         $logs = $logs->sortBy('date');
         $criteria = 'by Date';
         return view('employees.logs', compact('logs', 'criteria'));
     }
 
-    function sortByPriority() {
+    public function sortByPriority() {
         $logs = Timesheet::all();
         $logs = $logs->sortBy('clock_out');
         $criteria = 'by Priority';
         return view('employees.logs', compact('logs', 'criteria'));
     }
 
-    function checkWages() {
+    public function checkWages() {
         $payout = Payout::all();
         // dd($payout);
         $paid = array();
@@ -121,7 +126,7 @@ class PayoutController extends Controller
         return view('payout.payout', compact('payout', 'paid_total', 'criteria'));
     }
 
-    function sortPriority() {
+    public function sortPriority() {
         $payout = Payout::all();
         $payout = $payout->sortBy('status');
 
@@ -137,7 +142,7 @@ class PayoutController extends Controller
         return view('payout.payout', compact('payout', 'paid_total', 'criteria'));
     }
 
-    function sortName() {
+    public function sortName() {
 
         $payout = DB::table('payouts')
             ->leftJoin('employees', 'payouts.employee_id', '=', 'employees.id')
@@ -157,7 +162,7 @@ class PayoutController extends Controller
         return view('payout.sorted-payout', compact('payout', 'paid_total', 'criteria'));
     }
 
-    function sortJob() {
+    public function sortJob() {
 
         $payout = DB::table('payouts')
             ->leftJoin('employees', 'payouts.employee_id', '=', 'employees.id')
@@ -177,7 +182,7 @@ class PayoutController extends Controller
         return view('payout.sorted-payout', compact('payout', 'paid_total', 'criteria'));
     }
 
-    function sortDate() {
+    public function sortDate() {
         $payout = Payout::all();
         $payout = $payout->sortBy('date');
 
@@ -193,7 +198,7 @@ class PayoutController extends Controller
         return view('payout.payout', compact('payout', 'paid_total', 'criteria'));
     }
 
-    function sortHours() {
+    public function sortHours() {
         $payout = Payout::all();
         $payout = $payout->sortByDesc('hours');
 
@@ -209,7 +214,7 @@ class PayoutController extends Controller
         return view('payout.payout', compact('payout', 'paid_total', 'criteria'));
     }
 
-    function sortWage() {
+    public function sortWage() {
         $payout = Payout::all();
         $payout = $payout->sortByDesc('wage');
 
@@ -225,7 +230,7 @@ class PayoutController extends Controller
         return view('payout.payout', compact('payout', 'paid_total', 'criteria'));
     }
 
-    function multiDelete(Request $request) {
+    public function multiDelete(Request $request) {
         // dd($request);
         foreach ($request->deleteLogs as $deleteLog) {
             $date = substr($deleteLog, 0, 10);
@@ -249,19 +254,19 @@ class PayoutController extends Controller
         return redirect()->back();
     }
 
-    function confirmPayout(Request $request) {
+    public function confirmPayout(Request $request) {
         $payout = Payout::find($request->wage_id);
 
         return view('payout.confirm-payout', compact('payout'));
     }
 
-    function confirmSortedPayout(Request $request) {
+    public function confirmSortedPayout(Request $request) {
         $payout = Payout::where('timesheet_id', '=', $request->timesheet_id)->get();
         // dd($payout);
         return view('payout.confirm-sorted-payout', compact('payout'));
     }
 
-    function updateStatus(Request $request) {
+    public function updateStatus(Request $request) {
         $payout = Payout::find($request->payout_id);
         $payout->status_id = 2;
         $payout->save();

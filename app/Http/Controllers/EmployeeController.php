@@ -14,14 +14,19 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    function listAll() {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function listAll() {
     	$employees = Employee::all();
     	// $employees = Employee::paginate(10);
     	// dd($employees);
     	return view('employees.list', compact('employees'));
     }
 
-    function viewIndividual($id) {
+    public function viewIndividual($id) {
     	$employee = Employee::find($id);
         $jobs = Job::all();
     	// dd($employee);
@@ -46,7 +51,7 @@ class EmployeeController extends Controller
     	return view('employees.view', compact('employee', 'today', 'logs', 'jobs', 'payouts', 'history', 'wages'));
     }
 
-    function updateInfo(Request $request, $id) {
+    public function updateInfo(Request $request, $id) {
     	// dd($request);
     	// echo $id;
     	$employee = Employee::find($id);
@@ -63,11 +68,11 @@ class EmployeeController extends Controller
     	return redirect()->back();
     }
 
-    function addNew() {
+    public function addNew() {
         return view('employees.add-new');
     }
 
-    function saveNew(Request $request) {
+    public function saveNew(Request $request) {
         date_default_timezone_set('Asia/Manila');
         $today = date('F j, Y');
         $date = date('Y-n-j');
@@ -110,14 +115,14 @@ class EmployeeController extends Controller
         return view('employees.view', compact('employee', 'today', 'logs', 'payouts', 'jobs', 'history', 'wages'));
     }
 
-    function checkLogs() {
+    public function checkLogs() {
         $logs = Timesheet::all();
         // dd($logs);
         $criteria = '';
         return view('employees.logs', compact('logs', 'criteria'));
     }
 
-    function clockIn(Request $request) {
+    public function clockIn(Request $request) {
         $employee = Employee::find($request->employee_id);
         $job = Job::find($request->job_id);
         // dd($employee);
@@ -135,7 +140,7 @@ class EmployeeController extends Controller
         return view('employees.in', compact('timesheet', 'job'));
     }
 
-    function clockOut(Request $request) {
+    public function clockOut(Request $request) {
         date_default_timezone_set('Asia/Manila');
         $today = date('Y-n-j');
         $time = date('H:i:s');
@@ -170,7 +175,7 @@ class EmployeeController extends Controller
         return view('employees.out', compact('timesheet', 'payout', 'minutes'));
     }
 
-    function completeLog($id) {
+    public function completeLog($id) {
         $timesheet = Timesheet::find($id);
         // dd($timesheet);
         $start_date = new DateTime($timesheet->date);
@@ -183,7 +188,7 @@ class EmployeeController extends Controller
         return view('employees.complete-log', compact('timesheet', 'max_date', 'min_time'));
     }
 
-    function completeLogWithoutId(Request $request) {
+    public function completeLogWithoutId(Request $request) {
         // dd($request);
         $date = substr($request->timesheet, 0, 10);
         $clock_in = substr($request->timesheet, 10, 8);
@@ -204,10 +209,10 @@ class EmployeeController extends Controller
             $min_time = date('H:i:s', $one_hour_lapse);
             // echo $min_time;
             return view('employees.complete-log', compact('timesheet', 'max_date', 'min_time'));
-        }   
+        }
     }
 
-    function lateLogOut(Request $request) {
+    public function lateLogOut(Request $request) {
         // dd($request);
         $timesheet = Timesheet::find($request->timesheet_id);
         $job = Job::find($timesheet->job->id);
@@ -245,7 +250,7 @@ class EmployeeController extends Controller
         return redirect()->back();
     }
 
-    function deleteEmployee(Request $request) {
+    public function deleteEmployee(Request $request) {
         // dd($request);
         $employee = Employee::find($request->employee_id);
         $temp = $employee->name;
@@ -258,7 +263,7 @@ class EmployeeController extends Controller
         return view('employees.list', compact('employees'));
     }
 
-    function deleteLog(Request $request) {
+    public function deleteLog(Request $request) {
         $timesheet = Timesheet::find($request->timesheet_id);
         // dd($timesheet);
         $timesheet->delete();
@@ -268,14 +273,14 @@ class EmployeeController extends Controller
         return redirect()->back();
     }
 
-    function newLog() {
+    public function newLog() {
         $employees = Employee::all();
         $jobs = Job::all();
 
         return view('employees.new-log', compact('employees', 'jobs'));
     }
 
-    function saveLog(Request $request) {
+    public function saveLog(Request $request) {
         $incomplete = Timesheet::where([
                         ['employee_id', '=', $request->employee_id],
                         ['date', '=', $request->start_date],
