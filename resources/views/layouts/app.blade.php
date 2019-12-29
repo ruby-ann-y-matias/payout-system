@@ -10,6 +10,9 @@
 
     <title>{{ config('app.name') }}</title>
 
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
@@ -75,7 +78,7 @@
         </main>
     </div>
 
-    <!-- Import jQuery -->      
+    <!-- Import jQuery -->
     <script type="text/javascript" src="{{ asset('lib/jquery-3.2.1.min.js') }}"></script>
 
     <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
